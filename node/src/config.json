@@ -1,0 +1,6 @@
+{
+    "PORT": 12345,
+    "DBurl": "mongodb://119.23.107.32:27017",
+    "DBName": "kanghui",
+    "secret": "kanghui"
+}
