@@ -1,0 +1,15 @@
+.Header_Goods{
+    width: 100%;
+    height: 44px;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    padding: 0 14px;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,.1);
+    .Header_icon{
+        line-height: 44px;
+        font-size: 17px;
+        color: #01af63;
+    }
+}
