@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 
-let Hgw = axios.create({
-    baseURL:'http://www.hangowa.com/mo_bile/index.php'
+let KHLY = axios.create({
+    baseURL:'http://119.23.107.32'
 })
 
 export async function get(params,config={}){
-    let {data} = await Hgw.get('',{
+    let {data} = await KHLY.get('',{
         params,
         ...config
     })
@@ -14,7 +14,7 @@ export async function get(params,config={}){
 }
 
 export async function post(params,config={}){
-    let {data} = await Hgw.post('',params,config);
+    let {data} = await KHLY.post('',params,config);
     return data
 }
 

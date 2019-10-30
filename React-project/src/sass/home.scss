@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+}
+
+.home_head {
+    width: 100%;
+    height: 50px;
+    background-color: #58bc58;
+    position: fixed;
+    padding: 5px 2px 0;
+
+    .ant-col-4 {
+        a {
+
+            font-size: 18px;
+            color: black;
+        }
+    }
+
+    .ant-col-2 {
+        line-height: 40px;
+        font-size: 20px;
+    }
+
+
+}
