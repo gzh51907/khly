@@ -4,6 +4,7 @@ const { MongoClient } = require('mongodb');
 //DBName数据库名
 const {DBurl, DBName } = require('../config.json');
 
+
 // 连接MongoDB数据库
 async function connect(){
     let result;

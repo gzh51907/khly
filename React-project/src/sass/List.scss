@@ -1,4 +1,5 @@
 .Header_List{
+    position: fixed;
     width: 100%;
     height: 44px;
     top: 0;
@@ -17,13 +18,15 @@
     }
    
     .list_title{
-        color: #606060;
         position: absolute;
         left: 88px;
         right: 88px;
         text-align: center;
         line-height: 44px;
         font-size: 17px;
+        h1{
+            color: #606060;
+        }
         h1:before{
             content: '\0020';
             display: inline-block;
@@ -35,5 +38,134 @@
             vertical-align: -2px;
         }
     }
-    
+    .list_right{
+        float: right;
+        .search_icon{
+            line-height: 44px;
+            font-size: 17px;
+            color: #01af63;
+        }
+    }
+}
+.list_ul{
+    border-top: 1px solid #e8e8e8;
+    position: fixed;
+    padding-top: 44px;
+    z-index: 1;
+    left: 0;
+    width: 100%;
+}
+.products{
+    background-color: #fff;
+    padding-bottom: 2.7rem;
+    padding-top: 92px;
+    .content{
+        position: relative;
+        padding: 0 0 1px;
+        background-color: #fff;
+        border-bottom: 1px solid #e5e5e5;
+        .content_item{
+            position: relative;
+            padding: 0.8rem;
+            dl{
+                dt{
+                    display: table-cell;
+                    vertical-align: top;
+                    width: 120px;
+                    height: 90px;
+                    overflow: hidden;
+                    position: relative;
+                    float: left;
+                    img{
+                        max-width: 100%;
+                        height: 100%;
+                    }
+                }
+                dd{
+                    display: table-cell;
+                    vertical-align: top;
+                    height: 4.5rem;
+                    padding-left: .75rem;
+                    position: relative;
+                    .product_title{
+                        font-size: 1rem;
+                        height: 2.5rem;
+                        color: #333;
+                        white-space: normal;
+                        line-height: 1.2rem;
+                        overflow: hidden;
+                        display: -webkit-box;
+                    }
+                    .group{
+                        font-size: .7rem;
+                        color: #999;
+                        width: 100%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        height: .8rem;
+                        line-height: .8rem;
+                        margin-top: .2rem;
+                        .product_icon{
+                            margin-right: 4px;
+                            line-height: 0rem;
+                        }
+                    }
+                    .pro_tags{
+                        font-size: .7rem;
+                        color: #999;
+                    }
+                    .start{
+                        // float: left;
+                        font-size: .8rem;
+                        color: #999;
+                        display: inline;
+                    }
+                    .product_price{
+                        // float: right;
+                        text-align: right;
+                        position: absolute;
+                        bottom: -0.2rem;
+                        left: 0;
+                        width: 100%;
+                        span{
+                            font-size: 1.3rem;
+                            color: #ff811a;
+                        }
+                        .qi{
+                            font-size: .8rem;
+                            color: #999;
+                            margin-left: 2px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.List_footer{
+    height: 48px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    .footer_ul{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        background-color: rgba(65,69,82,.95);
+        .footer_li{
+            width: 25%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            // i{
+            // }
+            p{
+                margin-top: .15rem;
+                font-size: .75rem;
+            }
+        }
+    }
 }

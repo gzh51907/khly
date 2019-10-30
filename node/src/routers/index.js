@@ -2,6 +2,9 @@ const express = require('express');
 
 // 引入路由
 const Router = express.Router();
+// 引入每个模块
+const userRouter = require('./user');
+const goodsRouter = require('./goods');
 
 // 同意跨域
 Router.use((req, res, next) => {
@@ -18,10 +21,11 @@ Router.use((req, res, next) => {
 
 })
 
-// 引入每个模块
-const userRouter = require('./user');
+
 
 Router.use(express.urlencoded({extended:true}),express.json());//推导：内部自动调用next
 Router.use('/user',userRouter);
+Router.use('/goods',goodsRouter);
+
 
 module.exports = Router;

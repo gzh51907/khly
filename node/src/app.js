@@ -17,5 +17,5 @@ app.use(allRouter);
 
 // 启动服务器
 app.listen(PORT,()=>{
-    console.log(`Server startup,port：${PORT}`)
+    console.log(`服务器启动成功：${PORT}`)
 })
