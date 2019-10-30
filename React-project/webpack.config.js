@@ -41,6 +41,14 @@ module.exports = {
                 include: path.resolve(__dirname, './src')
             },
             {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                  limit: 10000,
+                  name: '../dist/img/[name].[hash:7].[ext]'
+                }
+            },
+            {
                 test:/\.css$/,
                 use:['style-loader','css-loader'],
             },
