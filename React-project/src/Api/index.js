@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 let KHLY = axios.create({
     baseURL:'http://119.23.107.32:12345'
 })
