@@ -20,11 +20,32 @@ class Home extends Component {
         {
             name: '周边推荐',
             text: '周边推荐'
-        }]
+        }],
+        // 轮播图数据
+        lunbo: [{
+            xuhao: 'lunbo1',
+            imageUrl: '../images/shouye/lunbo/lunbo1.jpg'
+        },
+        {
+            xuhao: 'lunbo2',
+            imageUrl: '../images/shouye/lunbo/lunbo2.jpg'
+        },
+        {
+            xuhao: 'lunbo3',
+            imageUrl: '../images/shouye/lunbo/lunbo3.jpg'
+        },
+        {
+            xuhao: 'lunbo4',
+            imageUrl: '../images/shouye/lunbo/lunbo4.jpg'
+        },
+        {
+            xuhao: 'lunbo5',
+            imageUrl: '../images/shouye/lunbo/lunbo5.jpg'
+        }],
     }
 
     render() {
-        let { selected, menu } = this.state;
+        let { selected, menu, lunbo } = this.state;
         return (
             <div style={{ backgroundColor: '#f1f1f1' }}>
                 <Row className="home_head">
@@ -46,9 +67,9 @@ class Home extends Component {
                 </Row>
                 <div className="lunbo">
                     <Carousel autoplay>
-                        <div>
-                            <img src="../images/shouye/lunbo/lunbo1.jpg" />
-                        </div>
+                        {
+                            lunbo.map(item => <img src={item.imageUrl} key={item.xuhao}/>)
+                        }
                     </Carousel>
                     <ul className="fenlei">
                         <li>
