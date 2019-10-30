@@ -10,7 +10,7 @@ import Goods from '@@/Goods';
 import List from '@@/List';
 import './App.scss';
 
-@withRouter
+// @withRouter
 class App extends Component {
     render() {
         return (
