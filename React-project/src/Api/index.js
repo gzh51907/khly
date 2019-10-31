@@ -9,7 +9,6 @@ export async function get(url,params,config={}){
         params,
         ...config
     })
-
     return data;
 }
 
