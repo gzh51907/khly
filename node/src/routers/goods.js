@@ -48,11 +48,22 @@ Router.get('/', async (req, res) => {
 
 // 查询单个商品
 Router.get('/getgoods', async (req, res) => {
+<<<<<<< HEAD
     let { tag } = req.query;
     // console.log(req.query)
     let result;
     try {
         result = await mongo.find(colName, { tag },null);
+=======
+    let {
+        tag
+    } = req.query;
+    let result;
+    try {
+        result = await mongo.find(colName, {
+            tag: tag
+        });
+>>>>>>> 1356aacc111a32e2ffae591dd3487bb9e580cde5
         if (result.length > 0) {
             result;
         } else {

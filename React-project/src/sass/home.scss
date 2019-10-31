@@ -178,10 +178,17 @@
             }
         }
 
-        h3{
+        h3 {
             font-size: 20px;
             margin: 5px;
             padding-left: 5px;
+            width: 90%;
+            height: 25px;
+            overflow: hidden;
+            display: -webkit-box;
+            text-overflow: ellipsis;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:1;
         }
 
     }
