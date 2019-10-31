@@ -1,0 +1,117 @@
+.Change_Data {
+    background: rgb(235, 231, 231);
+
+    .Goods_Header {
+        width: 100%;
+        height: 44px;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        padding: 0 14px;
+        background: #fff;
+        box-shadow: 0 0 2px rgba(0, 0, 0, .1);
+
+        a {
+            height: 44px;
+
+            .Header_icon {
+                line-height: 44px;
+                font-size: 17px;
+                color: #01af63;
+            }
+
+            .Header_logo {
+                padding-left: 35%;
+                font-size: 18px;
+                color: rgb(82, 78, 78);
+                text-align: center;
+                line-height: 44px;
+            }
+
+            .Header_logo:before {
+                content: '\0020';
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                margin-right: 5px;
+                background: url(../images/header_logo.png) no-repeat;
+                background-size: 100%;
+                vertical-align: -2px;
+            }
+        }
+    }
+
+    .Order_taocan {
+        margin: 8px 0;
+        background: #fff;
+        height: 60px;
+
+        h2 {
+            font-weight: 700;
+            padding-bottom: 6px;
+        }
+
+        p {
+            border: 1px solid #01af63;
+            color: #01af63;
+            width: 20%;
+            height: 25px;
+            text-align: center;
+
+        }
+    }
+
+    .Order_riqi {
+        margin: 8px 0;
+        background: #fff;
+
+        h2 {
+            font-weight: 700;
+            padding-bottom: 6px;
+        }
+    }
+
+    .Order_shuliang {
+        background: #fff;
+        height: 110px;
+
+        h2 {
+            font-weight: 700;
+            padding-bottom: 6px;
+        }
+    }
+
+    footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 70px;
+        background: white;
+        position: fixed;
+        bottom: 0;
+        border-top: 1px solid #ccc;
+
+        .Order_Price {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            width: 30%;
+        }
+
+        .Write_Order {
+            margin-left: 30%;
+            height: 40px;
+            width: 40%;
+
+            .Go_Order {
+                height: 100%;
+                font-size: 16px;
+                line-height: 40px;
+                text-align: center;
+                width: 100%;
+                margin-right: 8px;
+            }
+        }
+    }
+}
