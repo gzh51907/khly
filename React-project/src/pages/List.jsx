@@ -5,7 +5,6 @@ import '../sass/List.scss';
 
 class List extends Component {
 
-
     state = {
         visible: false,
         placement: 'bottom',
@@ -36,7 +35,7 @@ class List extends Component {
     }
     asc = async () =>{
         let data = await Api.post('goods/so',{
-
+            
         },null)
     }
     showDrawer = () => {

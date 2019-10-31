@@ -65,8 +65,9 @@ class Home extends Component {
     }
 
     // 模糊查询
-    search_goods = async (e)=>{
-        console.log(e)
+    goto_search = async (val)=>{
+        let { history } = this.props;
+        history.push('/search/'+val)
     }
 
     tab = async (tag) => {
@@ -103,7 +104,8 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
-                            onPressEnter={this.search_goods.bind(this,e)}
+                            // value
+                            onSearch={this.goto_search.bind(this)}
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
@@ -207,7 +209,6 @@ class Home extends Component {
                                 onClick={this.tab.bind(this, item.goodsTag)}
                                 style={{ width: '33.3%', height: 50, textAlign: "center" }}>
                                 {item.text}
-
                             </Menu.Item>)
                         }
 

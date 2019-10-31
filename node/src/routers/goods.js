@@ -5,15 +5,13 @@ const { mongo } = require('../db');
 const { formatData,} = require('../ustils');
 const colName = 'goods';
 
+// 排序
 Router.post('/so', async (req, res) => {
     let tag = req.query;
-    console.log(tag)
     let {sort} = req.body;
-    // console.log('sort',sort)
     let result
     try {
         result = await mongo.find(colName, tag , sort);
-        // console.log('result',result)
         if(result.length > 0){
             result;
         }else {
@@ -27,8 +25,30 @@ Router.post('/so', async (req, res) => {
         })
     }
     res.send(result);
-    // console.log(result)
 })
+
+// 模糊查询
+Router.get('/search', async (req, res) => {
+
+    let {title} = req.query;
+    let result
+    try {
+        result = await mongo.search(colName, title);
+        if(result.length > 0){
+            result;
+        }else {
+            result = formatData({
+                code: "0"
+            })
+        }
+    } catch (err) {
+        result = formatData({
+            code: "0"
+        })
+    }
+    res.send(result);
+})
+
 
 // 查询所有商品
 Router.get('/', async (req, res) => {

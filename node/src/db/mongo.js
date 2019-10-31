@@ -37,6 +37,7 @@ async function create(colName, data) {
 async function find(colName, query = {}, body = {}) {
     let { db, client } = await connect();
     let col = db.collection(colName);
+    console.log('进入排序')
     if (body) {
         body = body * 1
         let result = await col.find(query).sort({ "price": body }).toArray();
@@ -49,7 +50,18 @@ async function find(colName, query = {}, body = {}) {
     }
 }
 
+// 查 ,模糊查询  colName  集合名称 query    查询条件
+async function search(colName, query = {}) {
+    let { db, client } = await connect();
+    let col = db.collection(colName);
+    let result = await col.find({"title":{$regex:query, $options:'i'}}).toArray();
+    client.close();
+    return result;
+}
+
+
 module.exports = {
     create,
-    find
+    find,
+    search
 }
