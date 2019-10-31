@@ -47,7 +47,7 @@ Router.get('/', async (req, res) => {
 //     console.log(title)
 //     let result;
 //     try {
-//         result = await mongo.find(colName, { title }, null);
+//         result = await mongo.find(colName, { 'title' : {$regex:title}}, null);
 //         if (result.length > 0) {
 //             result;
 //         } else {

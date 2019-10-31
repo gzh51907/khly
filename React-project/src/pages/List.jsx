@@ -24,6 +24,7 @@ class List extends Component {
         ],
         goodslist: []
     }
+    //切换tab标签
     goto = async (text) => {
         let data = await Api.get('goods/getgoods', {
             tag: text
@@ -32,7 +33,13 @@ class List extends Component {
             goodslist: data
         });
     }
-    asc = async () => { //升序
+     // 跳转详情页
+     goto_goods = async (gid) => {
+        let { history } = this.props;
+        history.push('/goods/' + gid)
+    }
+    //升序
+    asc = async () => { 
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
             { sort:-1 },
         );
@@ -40,7 +47,8 @@ class List extends Component {
             goodslist:data
         })
     }
-    desc = async () => { //降序
+    //降序
+    desc = async () => { 
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
             { sort:1 },
         );
@@ -48,12 +56,12 @@ class List extends Component {
             goodslist:data
         })
     }
+    //弹窗
     showDrawer = () => {
         this.setState({
             visible: true,
         });
     };
-
     onClose = () => {
         this.setState({
             visible: false,
@@ -118,7 +126,10 @@ class List extends Component {
                     <div className="content">
                         {
                             goodslist.map(item => {
-                                return <div className="content_item" key={item.gid}>
+                                return <div className="content_item" 
+                                            key={item.gid}
+                                            onClick={this.goto_goods.bind(this, item.gid)}
+                                            >
                                     <dl>
                                         <dt>
                                             <img src={item.imgurl} />

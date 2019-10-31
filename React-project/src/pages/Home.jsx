@@ -65,9 +65,9 @@ class Home extends Component {
     }
 
     // 模糊查询
-    search_goods = async (e)=>{
-        console.log(e)
-    }
+    // search_goods = async (e)=>{
+    //     console.log(e)
+    // }
 
     tab = async (tag) => {
         let data = await Api.get('goods/getgoods', {
@@ -103,7 +103,7 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
-                            onPressEnter={this.search_goods.bind(this,e)}
+                            // onPressEnter={this.search_goods.bind(this)}
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
