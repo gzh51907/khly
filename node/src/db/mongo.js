@@ -37,7 +37,9 @@ async function create(colName, data) {
 async function find(colName, query = {}, body = {}) {
     let { db, client } = await connect();
     let col = db.collection(colName);
+    console.log('query',query)
     if (body) {
+        console.log('body',body)
         body = body * 1
         let result = await col.find(query).sort({ "price": body }).toArray();
         client.close();
@@ -49,7 +51,16 @@ async function find(colName, query = {}, body = {}) {
     }
 }
 
+async function search(colName, query = {}, body = {}) {
+    let { db, client } = await connect();
+    let col = db.collection(colName);
+    let result = await col.find(query).toArray();
+    client.close();
+    return result;
+}
+
 module.exports = {
     create,
-    find
+    find,
+    search
 }

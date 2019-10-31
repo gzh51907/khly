@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Api from '@/Api';
-import { Menu, Icon ,Drawer} from 'antd';
+import { Menu, Icon, Drawer } from 'antd';
 import '../sass/List.scss';
 
 class List extends Component {
@@ -29,15 +29,26 @@ class List extends Component {
     goto = async (text) => {
         let data = await Api.get('goods/getgoods', {
             tag: text
-        },null);
+        }, null);
         this.setState({
             goodslist: data
         });
     }
-    asc = async () =>{
-        let data = await Api.post('goods/so',{
-
-        },null)
+    asc = async () => { //升序
+        let data = await Api.post(`goods/sort?tag=${this.state.current}`,
+            { sort:-1 },
+        );
+        this.setState({
+            goodslist:data
+        })
+    }
+    desc = async () => { //降序
+        let data = await Api.post(`goods/sort?tag=${this.state.current}`,
+            { sort:1 },
+        );
+        this.setState({
+            goodslist:data
+        })
     }
     showDrawer = () => {
         this.setState({
@@ -57,10 +68,10 @@ class List extends Component {
     //     });
     // };
     async componentDidMount() {
-        let data = await Api.get('goods/getgoods',{
-            tag:this.state.current
-        },null)
-        console.log(data);
+        let data = await Api.get('goods/getgoods', {
+            tag: this.state.current
+        }, null)
+        // console.log(data);
         this.setState({
             goodslist: data
         })
@@ -149,7 +160,7 @@ class List extends Component {
                         <li className="footer_li"><Icon type="flag" /><p>线路玩法</p></li>
                         <li className="footer_li"><Icon type="global" /><p>目的地/出发地</p></li>
                         <li className="footer_li"><Icon type="history" /><p>时间/天数</p></li>
-                        <li className="footer_li"><Icon type="control" onClick={this.showDrawer} /><p>综合排序</p></li>  
+                        <li className="footer_li"><Icon type="control" onClick={this.showDrawer} /><p>综合排序</p></li>
                         <Drawer
                             title="综合排序"
                             placement={this.state.placement}
@@ -158,8 +169,8 @@ class List extends Component {
                             visible={this.state.visible}
                         >
                             {/* <Icon type="check" /> */}
-                            <p>价格从低到高</p>
-                            <p>价格从高到低</p>
+                            <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
+                            <p onClick={this.asc.bind(this,current)}>价格从高到低</p>
                         </Drawer>
                     </ul>
                 </footer>
