@@ -4,8 +4,6 @@ import { Menu, Icon, Drawer } from 'antd';
 import '../sass/List.scss';
 
 class List extends Component {
-
-
     state = {
         visible: false,
         placement: 'bottom',
