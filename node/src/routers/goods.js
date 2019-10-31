@@ -2,21 +2,19 @@ const express = require('express');
 const Router = express.Router();
 
 const { mongo } = require('../db');
-const { formatData,} = require('../ustils');
+const { formatData, } = require('../ustils');
 const colName = 'goods';
 
-Router.post('/so', async (req, res) => {
+Router.post('/sort', async (req, res) => {
     let tag = req.query;
-    console.log(tag)
-    let {sort} = req.body;
-    // console.log('sort',sort)
+    let { sort } = req.body;
     let result
     try {
-        result = await mongo.find(colName, tag , sort);
+        result = await mongo.find(colName, tag, sort);
         // console.log('result',result)
-        if(result.length > 0){
+        if (result.length > 0) {
             result;
-        }else {
+        } else {
             result = formatData({
                 code: "0"
             })
@@ -44,6 +42,27 @@ Router.get('/', async (req, res) => {
     // console.log(result)
 })
 
+// Router.get('/search', async (req, res) => {
+//     let title = req.query;
+//     console.log(title)
+//     let result;
+//     try {
+//         result = await mongo.find(colName, { title }, null);
+//         if (result.length > 0) {
+//             result;
+//         } else {
+//             result = formatData({
+//                 code: "0"
+//             })
+//         }
+//     } catch {
+//         result = formatData({
+//             code: "0"
+//         })
+//     }
+//     res.send(result);
+// })
+
 
 
 // 查询单个商品
@@ -51,7 +70,7 @@ Router.get('/getgoods', async (req, res) => {
     let { tag } = req.query;
     let result;
     try {
-        result = await mongo.find(colName, { tag },null);
+        result = await mongo.find(colName, { tag }, null);
         if (result.length > 0) {
             result;
         } else {
@@ -66,6 +85,7 @@ Router.get('/getgoods', async (req, res) => {
     }
     res.send(result);
 })
+
 
 // 添加商品
 Router.post('/add', async (req, res) => {

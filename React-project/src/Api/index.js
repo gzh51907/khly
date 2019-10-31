@@ -13,7 +13,7 @@ export async function get(url,params,config={}){
 }
 
 export async function post(url,params,config={}){
-    console.log("后台",params, config)
+    // console.log("后台",url,params, config)
     let {data} = await KHLY.post(url,params,config);
     return data
 }

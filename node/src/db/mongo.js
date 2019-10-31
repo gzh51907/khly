@@ -49,7 +49,16 @@ async function find(colName, query = {}, body = {}) {
     }
 }
 
+async function search(colName, query = {}, body = {}) {
+    let { db, client } = await connect();
+    let col = db.collection(colName);
+    let result = await col.find(query).toArray();
+    client.close();
+    return result;
+}
+
 module.exports = {
     create,
-    find
+    find,
+    search
 }
