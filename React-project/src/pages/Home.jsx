@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu ,BackTop } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -46,29 +46,44 @@ class Home extends Component {
             imageUrl: '../images/shouye/lunbo/lunbo5.jpg'
         }],
         home_goods: [],
-        current:'自由行'
+        current: '自由行'
     }
-
-    goto_guonei = async ()=>{
-        let {history} = this.props;
+    // 跳转list
+    goto_guonei = async () => {
+        let { history } = this.props;
         history.push('/list')
     }
 
-    goto = async (tag) => {
+    goto_login = async () => {
+        let { history } = this.props;
+        history.push('/login')
+    }
+    // 去详情页
+    goto_goods = async (gid) => {
+        let { history } = this.props;
+        history.push('/goods/' + gid)
+    }
+
+    // 模糊查询
+    search_goods = async (e)=>{
+        console.log(e)
+    }
+
+    tab = async (tag) => {
         let data = await Api.get('goods/getgoods', {
             tag: tag
         })
         this.setState({
-            home_goods : data,
+            home_goods: data,
         })
     }
     async componentDidMount() {
-        let {current,home_goods} = this.state;
+        let { current, home_goods } = this.state;
         let data = await Api.get('goods/getgoods', {
             tag: current
         })
         this.setState({
-            home_goods : data
+            home_goods: data
         })
     }
 
@@ -88,10 +103,11 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
+                            onPressEnter={this.search_goods.bind(this,e)}
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
-                    <Col span={2}><Icon type="user" /></Col>
+                    <Col span={2}><Icon type="user" onClick={this.goto_login.bind(this)} /></Col>
                 </Row>
                 <div className="lunbo">
                     <Carousel autoplay>
@@ -188,7 +204,7 @@ class Home extends Component {
                     >
                         {
                             menu.map(item => <Menu.Item key={item.name}
-                                onClick={this.goto.bind(this, item.goodsTag)}
+                                onClick={this.tab.bind(this, item.goodsTag)}
                                 style={{ width: '33.3%', height: 50, textAlign: "center" }}>
                                 {item.text}
 
@@ -199,7 +215,7 @@ class Home extends Component {
                     <div>
                         {
                             home_goods.map(item => {
-                                return  <div className="home_item" key={item.gid}>
+                                return <div className="home_item" key={item.gid} onClick={this.goto_goods.bind(this, item.gid)}>
                                     <h4>
                                         <span>{item.tag}</span> |
                                 <span>广州出发</span>
@@ -218,8 +234,8 @@ class Home extends Component {
                         }
                     </div>
                 </div>
-                        
-                <BackTop visibilityHeight="400"/>
+
+                <BackTop visibilityHeight="400" />
             </div>
         )
     }
