@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -10,21 +10,87 @@ class Home extends Component {
     state = {
         selected: '出境推荐',
         menu: [{
+            goodsTag: '自由行',
             name: '出境推荐',
             text: '出境推荐'
         },
         {
+            goodsTag: '跟团游',
             name: '国内推荐',
             text: '国内推荐'
         },
         {
+            goodsTag: '当地玩乐',
             name: '周边推荐',
             text: '周边推荐'
-        }]
+        }],
+        // 轮播图数据
+        lunbo: [{
+            xuhao: 'lunbo1',
+            imageUrl: '../images/shouye/lunbo/lunbo1.jpg'
+        },
+        {
+            xuhao: 'lunbo2',
+            imageUrl: '../images/shouye/lunbo/lunbo2.jpg'
+        },
+        {
+            xuhao: 'lunbo3',
+            imageUrl: '../images/shouye/lunbo/lunbo3.jpg'
+        },
+        {
+            xuhao: 'lunbo4',
+            imageUrl: '../images/shouye/lunbo/lunbo4.jpg'
+        },
+        {
+            xuhao: 'lunbo5',
+            imageUrl: '../images/shouye/lunbo/lunbo5.jpg'
+        }],
+        home_goods: [],
+        current: '自由行'
+    }
+    // 跳转list
+    goto_guonei = async () => {
+        let { history } = this.props;
+        history.push('/list')
+    }
+
+    goto_login = async () => {
+        let { history } = this.props;
+        history.push('/login')
+    }
+    // 去详情页
+    goto_goods = async (gid) => {
+        let { history } = this.props;
+        history.push('/goods/' + gid)
+    }
+
+    // 模糊查询
+    goto_search = async (val)=>{
+        let { history } = this.props;
+        history.push('/search/'+val)
+    }
+
+    tab = async (tag) => {
+        let data = await Api.get('goods/getgoods', {
+            tag: tag
+        })
+        this.setState({
+            home_goods: data,
+        })
+    }
+    async componentDidMount() {
+        let { current, home_goods } = this.state;
+        let data = await Api.get('goods/getgoods', {
+            tag: current
+        })
+        this.setState({
+            home_goods: data
+        })
     }
 
     render() {
-        let { selected, menu } = this.state;
+        let { selected, menu, lunbo, home_goods } = this.state;
+
         return (
             <div style={{ backgroundColor: '#f1f1f1' }}>
                 <Row className="home_head">
@@ -37,18 +103,19 @@ class Home extends Component {
                     <Col span={16}>
                         <Search
                             placeholder="input search text"
-                            // onSearch={value => console.log(value)}
                             style={{ width: "95%", height: 35 }}
+                            // value
+                            onSearch={this.goto_search.bind(this)}
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
-                    <Col span={2}><Icon type="user" /></Col>
+                    <Col span={2}><Icon type="user" onClick={this.goto_login.bind(this)} /></Col>
                 </Row>
                 <div className="lunbo">
                     <Carousel autoplay>
-                        <div>
-                            <img src="../images/shouye/lunbo/lunbo1.jpg" />
-                        </div>
+                        {
+                            lunbo.map(item => <img src={item.imageUrl} key={item.xuhao} />)
+                        }
                     </Carousel>
                     <ul className="fenlei">
                         <li>
@@ -57,7 +124,7 @@ class Home extends Component {
                             </i>
                             <span>周边游</span>
                         </li>
-                        <li>
+                        <li onClick={this.goto_guonei.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/guonei.png" />
                             </i>
@@ -132,7 +199,6 @@ class Home extends Component {
                     <Menu mode="horizontal"
                         selectedKeys={selected}
                         onSelect={({ key }) => {
-                            // history.push(key)
                             this.setState({
                                 selected: [key]
                             })
@@ -140,28 +206,37 @@ class Home extends Component {
                     >
                         {
                             menu.map(item => <Menu.Item key={item.name}
+                                onClick={this.tab.bind(this, item.goodsTag)}
                                 style={{ width: '33.3%', height: 50, textAlign: "center" }}>
                                 {item.text}
-
                             </Menu.Item>)
                         }
 
                     </Menu >
-                    <div className="home_item">
-                        <h4>
-                            <span>自由行</span> |
+                    <div>
+                        {
+                            home_goods.map(item => {
+                                return <div className="home_item" key={item.gid} onClick={this.goto_goods.bind(this, item.gid)}>
+                                    <h4>
+                                        <span>{item.tag}</span> |
                                 <span>广州出发</span>
-                        </h4>
-                        <p>
-                            ￥ &nbsp;
-                                        <span style={{ fontSize: 20, fontWeight: 'bold' }}>20</span>
-                            &nbsp;起
+                                    </h4>
+                                    <p>
+                                        ￥ &nbsp;
+                                        <span style={{ fontSize: 20, fontWeight: 'bold' }}>{item.price}</span>
+                                        &nbsp;起
                                     </p>
-                        <img src="../images/shouye/chujingtuijian/5.jpg" />
-                        <h3>11</h3>
-                        <span style={{ paddingLeft: 10 }}>超值行程</span>
+                                    <img src={item.imgurl} />
+                                    <h3>{item.title}</h3>
+                                    <span style={{ paddingLeft: 10 }}>{item.pro_tags}</span>
+                                </div>
+
+                            })
+                        }
                     </div>
                 </div>
+
+                <BackTop visibilityHeight="400" />
             </div>
         )
     }
