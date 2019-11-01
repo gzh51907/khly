@@ -25,8 +25,30 @@ Router.post('/sort', async (req, res) => {
         })
     }
     res.send(result);
-    // console.log(result)
 })
+
+// 模糊查询
+Router.get('/search', async (req, res) => {
+
+    let {title} = req.query;
+    let result
+    try {
+        result = await mongo.search(colName, title);
+        if(result.length > 0){
+            result;
+        }else {
+            result = formatData({
+                code: "0"
+            })
+        }
+    } catch (err) {
+        result = formatData({
+            code: "0"
+        })
+    }
+    res.send(result);
+})
+
 
 // 查询所有商品
 Router.get('/', async (req, res) => {
