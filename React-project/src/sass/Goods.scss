@@ -259,9 +259,26 @@
     .Goods_Footer {
         width: 100%;
         height: 44px;
-        background: #f35b5b;
+        background: #fff;
         position: fixed;
         bottom: 0;
+        left: 0;
+        display: flex;
+
+        span {
+            width: 120px;
+            height: 50px;
+            font-size: 16px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+        }
+
+        .like_order {
+            line-height: 50px;
+            text-align: center;
+            width: 150px;
+            background: #f50;
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import Login from '@@/Login';
 import Goods from '@@/Goods';
 import List from '@@/List';
 import Order from '@@/Order';
+import Form from '@@/Form';
 import './App.scss';
 
 // @withRouter
@@ -23,6 +24,7 @@ class App extends Component {
                     <Route path="/list" component={List} />
                     <Route path="/goods/:id" component={Goods} />
                     <Route path="/order/:id" component={Order} />
+                    <Route path="/form/:id" component={Form} />
                     <Route path="/NotFound" render={() => <div><h1 style={{ textAlign: 'center' }}>404</h1></div>} /> */}
                     <Redirect from="/" to="/home" exact />
                     <Redirect from="*" to="/NotFound" />

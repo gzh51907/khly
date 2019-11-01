@@ -1,15 +1,50 @@
 import React, { Component } from 'react';
 import '../sass/Goods.scss';
 import '../sass/base.css';
-import { Menu, Icon, Tag, Badge } from 'antd';
+import { Menu, Icon, Tag, Badge, BackTop } from 'antd';
+
+//返回上一页这段代码
+// import creatHistory from 'history/createHashHistory';
+// import creatHistory from 'history.creatHashHistory';
+// require（"history"）.createHashHistory;
+// require（"history/createHashHistory"）;
+// const history = creatHistory();
+
 
 class Goods extends Component {
+
+    state = {
+        data: {}
+    }
+    // super(props);
+    // 点击goto_back跳回上一页面
+    goto_back() {
+        // let { history } = this.props;
+        // history.push();
+
+        this.props.history.go(-1);
+    }
+
+
+    async componentDidMount() {
+        console.log("Goods.props", this.props);
+        let { match } = this.props;
+        // 接收gid
+        let gid = match.params.id;
+
+        // let { datas } = await ExtensionScriptApis.length({
+        //     // 接收地址对象
+
+
+        // })
+
+    }
 
     render() {
         return (
             <div className="Goods_content">
                 <div className="Goods_Header">
-                    <a href="###">
+                    <a href="###" onClick={this.goto_back}>
                         <span className="Header_icon">
                             <Icon type="left" />
                         </span>
@@ -25,6 +60,7 @@ class Goods extends Component {
                         </span>
                     </a>
                 </div>
+
                 <div className="Goods_Main">
                     <section className="Main_Detail">
                         <div className="MD_img">
@@ -64,7 +100,7 @@ class Goods extends Component {
                             <li className="Nav_Item">退改政策</li>
                         </ul>
                     </div>
-                    {/* 特色路线 */}
+
                     <div className="Main_DetailInfo">
                         <ul>
                             <li> 优选航班：海航北京直飞，全程无导游服务费；</li>
@@ -129,7 +165,6 @@ class Goods extends Component {
                                     <span className="flight-num">
                                         海南国际航空公司HU7920
                                     </span>
-
                                 </div>
                                 {/* 5 */}
                                 <div>
@@ -143,14 +178,12 @@ class Goods extends Component {
                                             05:40</span><br />
                                         北京首都机场
                                     </div>
-
-
                                 </div>
                             </div>
 
                             {/* 详细行程 */}
                             <div>
-                                <h3 class="intro-title">详细行程</h3>
+                                <h3 className="intro-title">详细行程</h3>
                             </div>
                         </div>
                     </div>
@@ -160,12 +193,27 @@ class Goods extends Component {
                     </div>
                 </div>
                 <div className="Goods_Footer">
-                    <h2>22</h2>
+                    <span>
+                        <Icon type="phone" />
+                        <Tag>电话客服</Tag>
+                    </span>
+                    <span>
+                        <Icon type="user" />
+                        <Tag>在线咨询</Tag>
+                    </span>
+                    <span className="like_order">
+                        <Tag color="#f50" style={{ border: 'none' }}>立即预定</Tag>
+                    </span>
+                </div>
+
+                <div>
+                    <BackTop>
+                        <strong style={{ color: '#195' }}>回到顶部</strong>
+                    </BackTop>
                 </div>
             </div >
         )
     }
-
 }
 
 

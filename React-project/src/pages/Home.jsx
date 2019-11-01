@@ -62,10 +62,11 @@ class Home extends Component {
     goto_goods = async (gid) => {
         let { history } = this.props;
         history.push('/goods/' + gid)
+
     }
 
     // 模糊查询
-    search_goods = async (e)=>{
+    search_goods = async (e) => {
         console.log(e)
     }
 
@@ -103,7 +104,9 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
-                            onPressEnter={this.search_goods.bind(this,e)}
+                            //去e ===========================================
+                            // onPressEnter={this.search_goods.bind(this,e)}
+                            onPressEnter={this.search_goods.bind(this)}
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
