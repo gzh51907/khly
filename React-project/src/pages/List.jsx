@@ -149,6 +149,7 @@ class List extends Component {
                             <Menu.Item
                                 onClick={this.goto.bind(this, item.text)}
                                 key={item.text}
+                                className="list_li"
                             >
                                 {item.text}
                             </Menu.Item>
