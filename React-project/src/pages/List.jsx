@@ -6,9 +6,10 @@ import '../sass/List.scss';
 class List extends Component {
     state = {
         visible: false,
+        visible2: false,
         placement: 'bottom',
+        placement2: 'bottom',
         current: '产品推荐',
-        current2: '价格从低到高',
         menu: [
             {
                 text: '产品推荐'
@@ -24,12 +25,24 @@ class List extends Component {
             },
         ],
         goodslist: [],
-        order: [
+        date: [
             {
-                text: '价格从低到高'
+                name: '元旦'
             },
             {
-                text: '价格从高到低'
+                name: '春节'
+            },
+            {
+                name: '清明'
+            },
+            {
+                name: '五一'
+            },
+            {
+                name: '11月'
+            },
+            {
+                name: '12月'
             },
         ]
     }
@@ -70,10 +83,19 @@ class List extends Component {
         this.setState({
             visible: true,
         });
+
+    };
+    showDrawer2 = () => {
+        this.setState({
+            visible2: true,
+        });
     };
     onClose = () => {
         this.setState({
             visible: false,
+        });
+        this.setState({
+            visible2: false,
         });
     };
 
@@ -92,7 +114,7 @@ class List extends Component {
         })
     }
     render() {
-        let { menu, current, current2, goodslist, order } = this.state;
+        let { menu, current, goodslist, date } = this.state;
         // console.log(goodslist)
         return (
             <>
@@ -156,7 +178,8 @@ class List extends Component {
                                                 <span>11月</span>
                                             </div>
                                             <div className="pro_tags">
-                                                <span>{item.pro_tags}</span>
+                                                <span className="bor-all">{item.pro_tags}</span>
+                                                <span className="bor-all">{item.pro_tags1}</span>
                                             </div>
                                             <div className="start">
                                                 出发地：广州
@@ -177,7 +200,7 @@ class List extends Component {
                     <ul className="footer_ul">
                         <li className="footer_li"><Icon type="flag" /><p>线路玩法</p></li>
                         <li className="footer_li"><Icon type="global" /><p>目的地/出发地</p></li>
-                        <li className="footer_li"><Icon type="history" /><p>时间/天数</p></li>
+                        <li className="footer_li"><Icon type="history" onClick={this.showDrawer2} /><p>时间/天数</p></li>
                         <li className="footer_li"><Icon type="control" onClick={this.showDrawer} /><p>综合排序</p></li>
                         <Drawer
                             title="综合排序"
@@ -186,14 +209,11 @@ class List extends Component {
                             onClose={this.onClose}
                             visible={this.state.visible}
                         >
-                            
-                            
                             {/* <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
                             <p onClick={this.asc.bind(this,current)}>价格从高到低</p> */}
                             <Menu
                                 style={{ width: '100%' }}
-                                selectedKeys={current2}
-                                
+                            // selectedKeys={current2}
                             >
                                 <Menu.Item onClick={this.desc.bind(this, current)}>
                                     价格从低到高
@@ -201,6 +221,23 @@ class List extends Component {
                                 <Menu.Item onClick={this.asc.bind(this, current)}>
                                     价格从高到低
                              </Menu.Item>
+                            </Menu>
+                        </Drawer>
+                        <Drawer
+                            title="出游时间"
+                            placement={this.state.placement}
+                            closable={false}
+                            onClose={this.onClose}
+                            visible={this.state.visible2}
+                        >
+                            <Menu style={{ width: '100%' }}>
+                                {
+                                    date.map(item => {
+                                        return <Menu.Item key={item.name}>
+                                            {item.name}
+                                        </Menu.Item>
+                                    })
+                                }
                             </Menu>
                         </Drawer>
                     </ul>

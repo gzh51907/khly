@@ -132,6 +132,14 @@
                     .pro_tags{
                         font-size: .7rem;
                         color: #999;
+                        margin-top: .1rem;
+                        .bor-all{           
+                            padding:0 3px;
+                            margin-right: 6px;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                            border: 1px solid #e5e5e5;
+                        }
                     }
                     .start{
                         // float: left;
@@ -192,6 +200,12 @@
     padding:0
 }
 .ant-drawer-header{
-    font-size: 16px;
+    font-size: 14px;
     // background: #001529;
+}
+.ant-drawer-wrapper-body{
+    display: flex;
+    .ant-menu-item{
+        width: 100%;
+    }
 }

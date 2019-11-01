@@ -42,29 +42,6 @@ Router.get('/', async (req, res) => {
     // console.log(result)
 })
 
-// Router.get('/search', async (req, res) => {
-//     let title = req.query;
-//     console.log(title)
-//     let result;
-//     try {
-//         result = await mongo.find(colName, { 'title' : {$regex:title}}, null);
-//         if (result.length > 0) {
-//             result;
-//         } else {
-//             result = formatData({
-//                 code: "0"
-//             })
-//         }
-//     } catch {
-//         result = formatData({
-//             code: "0"
-//         })
-//     }
-//     res.send(result);
-// })
-
-
-
 // 查询单个商品
 Router.get('/getgoods', async (req, res) => {
     let { tag } = req.query;
