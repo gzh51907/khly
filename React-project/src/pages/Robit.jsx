@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Api from '@/Api';
 import 'whatwg-fetch';
@@ -21,7 +21,7 @@ class Robit extends Component {
         })
     }
     //自定义函数，处理发送数据及返回的网络数据的保存操作
-   async sendMessage() {
+    sendMessage() {
         var message = this.state.meg
         if (message === '') {
             alert('不能发送空白消息哦')
@@ -29,34 +29,42 @@ class Robit extends Component {
             this.setState({
                 megArray: [...this.state.megArray, message]
             })
-            let {megArray} = this.state;
+            let { megArray } = this.state;
             //锁定当前环境
             var that = this
-            
-            // var info = 'http://openapi.tuling123.com/openapi/api/v2?key=20480027bb364c7d8e72aaac99a78f47&info=' + megArray;
-            // var send1 = new XMLHttpRequest();
-            // send1.open("GET", info, true);
-            // send1.send();
-    
-            // send1.onreadystatechange = function () {
-            //     if (send1.readyState == 4 && send1.status == 200) {
-            //         var data = send1.responseText;
-            //         setResult(data);
-            //     }
-            // };
-            // console.log('send1',send1)
 
-            //使用fetch工具
-            var func = await fetch('http://openapi.tuling123.com/openapi/api/v2?key=20480027bb364c7d8e72aaac99a78f47&info=' + megArray, {
-                method: 'POST',
+            var func = Api.post('http://openapi.tuling123.com/openapi/api/v2', {
+                // method: 'POST',
                 type: 'cors',
-                mode:'no-cors',
+                // mode: 'no-cors',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'*'
                 },
-            })
-            .then(function (response) {
+                raw:{
+                    "reqType": 0,
+                    "perception": {
+                        "inputText": {
+                            "text": "你好"
+                        },
+                        "inputImage": {
+                            "url": "imageUrl"
+                        },
+                        "selfInfo": {
+                            "location": {
+                                "city": "北京",
+                                "province": "北京",
+                                "street": "信息路"
+                            }
+                        }
+                    },
+                    "userInfo": {
+                        "apiKey": "20480027bb364c7d8e72aaac99a78f47",
+                        "userId": "419678"
+                    }
+                }
+            }).then(function (response) {
                 return response.text()
             }).then(function (detail) {
                 return (that.setState({
@@ -64,11 +72,11 @@ class Robit extends Component {
                 }, () => {
                     //ReactDOM.findDOMNode()找到真正的节点
                     var el = ReactDOM.findDOMNode(that.refs.msgList);
-                    console.log('el',el)
+                    console.log('el', el)
                     el.scrollTop = el.scrollHeight;
                 }))
             })
-            console.log('func',func)
+            console.log('func', func)
             this.state.meg = ''
         }
     }
