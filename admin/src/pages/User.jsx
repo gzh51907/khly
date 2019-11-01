@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 
 
-import { List, Avatar, Icon, IconText, Row, Col, Divider } from 'antd';
+import { List, Avatar, Icon, IconText, Row, Col, Divider, message } from 'antd';
 import Api from '../Api';
 class User extends Component {
     state = {
         listData: []
     }
-    deleteuser(username) {
-        console.log('dianji',username)
+    async deleteuser(username) {
+        let { code } = await Api.post('/user/dele', {
+            username
+        })
+        if (code === 1) {
+            message.success('删除成功');
+            let userlist = await Api.post("/user", {});
+            this.setState({
+                listData: userlist
+            })
+        } else {
+            message.error('删除失败');
+        }
+
     }
     async componentDidMount() {
         console.log('进入页面');
