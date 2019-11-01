@@ -49,16 +49,11 @@ async function find(colName, query = {}, body = {}) {
     }
 }
 
-// async function search(colName, query = {}, body = {}) {
-//     let { db, client } = await connect();
-//     let col = db.collection(colName);
-//     let result = await col.find(query).toArray();
-
 // 查 ,模糊查询  colName  集合名称 query    查询条件
 async function search(colName, query = {}) {
     let { db, client } = await connect();
     let col = db.collection(colName);
-    let result = await col.find({"title":{$regex:query, $options:'i'}}).toArray();
+    let result = await col.find({ "title": { $regex: query, $options: 'i' } }).toArray();
     client.close();
     return result;
 }
