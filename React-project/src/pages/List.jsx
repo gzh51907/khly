@@ -8,6 +8,7 @@ class List extends Component {
         visible: false,
         placement: 'bottom',
         current: '产品推荐',
+        current2: '价格从低到高',
         menu: [
             {
                 text: '产品推荐'
@@ -22,7 +23,15 @@ class List extends Component {
                 text: '当地玩乐'
             },
         ],
-        goodslist: []
+        goodslist: [],
+        order: [
+            {
+                text: '价格从低到高'
+            },
+            {
+                text: '价格从高到低'
+            },
+        ]
     }
     //切换tab标签
     goto = async (text) => {
@@ -33,27 +42,27 @@ class List extends Component {
             goodslist: data
         });
     }
-     // 跳转详情页
-     goto_goods = async (gid) => {
+    // 跳转详情页
+    goto_goods = async (gid) => {
         let { history } = this.props;
         history.push('/goods/' + gid)
     }
     //升序
-    asc = async () => { 
+    asc = async () => {
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
-            { sort:-1 },
+            { sort: -1 },
         );
         this.setState({
-            goodslist:data
+            goodslist: data
         })
     }
     //降序
-    desc = async () => { 
+    desc = async () => {
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
-            { sort:1 },
+            { sort: 1 },
         );
         this.setState({
-            goodslist:data
+            goodslist: data
         })
     }
     //弹窗
@@ -83,7 +92,7 @@ class List extends Component {
         })
     }
     render() {
-        let { menu, current, goodslist } = this.state;
+        let { menu, current, current2, goodslist, order } = this.state;
         // console.log(goodslist)
         return (
             <>
@@ -126,10 +135,10 @@ class List extends Component {
                     <div className="content">
                         {
                             goodslist.map(item => {
-                                return <div className="content_item" 
-                                            key={item.gid}
-                                            onClick={this.goto_goods.bind(this, item.gid)}
-                                            >
+                                return <div className="content_item"
+                                    key={item.gid}
+                                    onClick={this.goto_goods.bind(this, item.gid)}
+                                >
                                     <dl>
                                         <dt>
                                             <img src={item.imgurl} />
@@ -177,9 +186,22 @@ class List extends Component {
                             onClose={this.onClose}
                             visible={this.state.visible}
                         >
-                            {/* <Icon type="check" /> */}
-                            <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
-                            <p onClick={this.asc.bind(this,current)}>价格从高到低</p>
+                            
+                            
+                            {/* <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
+                            <p onClick={this.asc.bind(this,current)}>价格从高到低</p> */}
+                            <Menu
+                                style={{ width: '100%' }}
+                                selectedKeys={current2}
+                                
+                            >
+                                <Menu.Item onClick={this.desc.bind(this, current)}>
+                                    价格从低到高
+                             </Menu.Item>
+                                <Menu.Item onClick={this.asc.bind(this, current)}>
+                                    价格从高到低
+                             </Menu.Item>
+                            </Menu>
                         </Drawer>
                     </ul>
                 </footer>
