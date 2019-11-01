@@ -1,15 +1,267 @@
-.Header_Goods{
+.Goods_content {
+    height: auto;
     width: 100%;
-    height: 44px;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    padding: 0 14px;
-    background: #fff;
-    box-shadow: 0 0 2px rgba(0,0,0,.1);
-    .Header_icon{
-        line-height: 44px;
-        font-size: 17px;
-        color: #01af63;
+    position: relative;
+    background: rgb(219, 218, 218);
+
+    .Goods_Header {
+        width: 100%;
+        height: 44px;
+        top: 0;
+        left: 0;
+        z-index: 9;
+        padding: 0 14px;
+        background: #fff;
+        box-shadow: 0 0 2px rgba(0, 0, 0, .1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        a {
+            height: 44px;
+
+            .Header_icon {
+                line-height: 44px;
+                font-size: 17px;
+                color: #01af63;
+            }
+
+            .Header_logo {
+                font-size: 18px;
+                color: rgb(82, 78, 78);
+                text-align: center;
+                line-height: 44px;
+            }
+
+            .Header_logo:before {
+                content: '\0020';
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                margin-right: 5px;
+                background: url(../images/header_logo.png) no-repeat;
+                background-size: 100%;
+                vertical-align: -2px;
+            }
+        }
     }
+
+    .Goods_Main {
+        width: 100%;
+        height: 3000px;
+
+        .Main_Detail {
+            width: 100%;
+            height: 412px;
+            background: white;
+
+            .MD_img {
+                position: relative;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .To_Info {
+                    z-index: 100;
+
+                    bottom: 10px;
+                    color: white;
+                    font-size: 16px;
+                }
+
+                .MD_Order {
+                    position: absolute;
+                    right: 10px;
+                }
+
+                .MD_Type {
+                    position: absolute;
+                    left: 10px;
+                }
+
+
+            }
+
+            .MD_info {
+                padding: 4% 4%;
+
+                h1 {
+                    font-size: 16px;
+                    color: #000;
+                }
+
+                h2 {
+                    font-size: 14px;
+                    color: #404140;
+                    margin-top: 8px;
+                }
+            }
+
+            .MD_Price {
+                color: #ff811a;
+                font-weight: 800px;
+                font-size: 14px;
+                margin-left: 4%;
+                margin-top: -10px;
+                border-bottom: 1px solid #ccc;
+
+                em {
+                    font-size: 22px;
+                }
+            }
+
+            .MD_tips {
+                padding-left: 4%;
+                color: #313131;
+                font-size: 14px;
+            }
+
+        }
+
+        .Main_tourday {
+            width: 100%;
+            height: 68px;
+            background: white;
+            padding: 4%;
+            font-size: 14px;
+            margin: 6px 0;
+            position: relative;
+
+            .Right_Date {
+                font-size: 18px;
+                position: absolute;
+                right: 10px;
+            }
+        }
+
+        .Main_Navwarp {
+            width: 100%;
+            height: 44px;
+            background: white;
+            margin-bottom: 2px;
+
+            .Nav_Container {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                line-height: 44px;
+
+                .Nav_Active {
+                    width: 20%;
+                    height: 44px;
+                    border-bottom: 2px solid#195;
+                    color: #195;
+                }
+            }
+        }
+
+        .Main_DetailInfo {
+
+            width: 100%;
+            height: auto;
+            background: rgb(121, 224, 144);
+
+            ul {
+                height: 140px;
+                padding: 15px;
+                background: #fff;
+            }
+
+            .Xingchen {
+                background: white;
+
+                .Detail-Dead {
+                    width: 100%;
+                    height: 22px;
+                    font-weight: 700;
+                    padding-left: 40%;
+                    color: black;
+                }
+
+                .Detail-Dead2 {
+                    width: 100%;
+                    height: 22px;
+                    color: black;
+                    margin: 12px 0 0 10px;
+                }
+
+                .od {
+                    background: rgb(236, 231, 231);
+                    width: 90%;
+                    height: 30px;
+                    margin-left: 3%;
+
+                    .bt {
+                        height: 24px;
+                        color: #666;
+                        width: 42px;
+                        font-size: 14px;
+                        padding: 0px 12px;
+                    }
+
+                    .city-item {
+                        margin-right: 8px;
+                        font-size: 14px;
+                        color: black;
+                    }
+                }
+
+                .Cankao_Route {
+                    div:nth-child(1) {
+                        p {
+                            margin-left: 10px;
+                        }
+                    }
+
+                    div:nth-child(2),
+                    div:nth-child(4) {
+                        margin: 12px 10px;
+                        font-size: 18px;
+                        color: block;
+
+                        .flight-city {
+                            font-weight: 600;
+                            color: block;
+                            padding-right: 15px;
+                        }
+
+                        .flight-num {
+                            color: #666;
+                            font-size: 14px;
+                        }
+                    }
+
+                    div:nth-child(3),
+                    div:nth-child(5) {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .time {
+                            font-size: 22px;
+                            color: block;
+                        }
+                    }
+                }
+            }
+        }
+
+        .Main_xingcheng {
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .Goods_Footer {
+        width: 100%;
+        height: 44px;
+        background: #f35b5b;
+        position: fixed;
+        bottom: 0;
+    }
+
 }

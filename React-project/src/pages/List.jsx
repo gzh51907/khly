@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import Api from '@/Api';
+import { Menu, Icon, Drawer } from 'antd';
 import '../sass/List.scss';
-import { Menu, Icon } from 'antd';
 
 class List extends Component {
     state = {
-        // current:['产品推荐'],
+        visible: false,
+        placement: 'bottom',
+        current: '产品推荐',
         menu: [
             {
                 text: '产品推荐'
@@ -18,11 +21,62 @@ class List extends Component {
             {
                 text: '当地玩乐'
             },
-        ]
+        ],
+        goodslist: []
+    }
+    goto = async (text) => {
+        let data = await Api.get('goods/getgoods', {
+            tag: text
+        }, null);
+        this.setState({
+            goodslist: data
+        });
+    }
+    asc = async () => { //升序
+        let data = await Api.post(`goods/sort?tag=${this.state.current}`,
+            { sort:-1 },
+        );
+        this.setState({
+            goodslist:data
+        })
+    }
+    desc = async () => { //降序
+        let data = await Api.post(`goods/sort?tag=${this.state.current}`,
+            { sort:1 },
+        );
+        this.setState({
+            goodslist:data
+        })
+    }
+    showDrawer = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    // onChange = e => {
+    //     this.setState({
+    //         placement: e.target.value,
+    //     });
+    // };
+    async componentDidMount() {
+        let data = await Api.get('goods/getgoods', {
+            tag: this.state.current
+        }, null)
+        // console.log(data);
+        this.setState({
+            goodslist: data
+        })
     }
     render() {
-        let { menu, current } = this.state;
-        // console.log(menu, current)
+        let { menu, current, goodslist } = this.state;
+        // console.log(goodslist)
         return (
             <>
                 <header className="Header_List">
@@ -34,19 +88,27 @@ class List extends Component {
                         <h1>康辉旅游</h1>
                     </div>
                     <span className="list_right">
-                        <a href="###">
-                            <Icon type="search" className="search_icon" />
-                        </a>
+                        {/* <a href="###"> */}
+                        <Icon type="search" className="search_icon" />
+                        {/* </a> */}
                     </span>
                 </header>
                 <Menu
-                    selectedKeys={[current]}
+                    selectedKeys={current}
+                    onSelect={({ key }) => {
+                        this.setState({
+                            current: [key]
+                        })
+                    }}
                     mode="horizontal"
                     className="list_ul"
                 >
                     {
                         menu.map(item =>
-                            <Menu.Item key={item.text}>
+                            <Menu.Item
+                                onClick={this.goto.bind(this, item.text)}
+                                key={item.text}
+                            >
                                 {item.text}
                             </Menu.Item>
                         )
@@ -54,41 +116,60 @@ class List extends Component {
                 </Menu>
                 <div className="products">
                     <div className="content">
-                        <div className="content_item">
-                            <dl>
-                                <dt><img src="https://i.cctcdn.com/up/i/1607/12/8c8b37b3e218.jpg_750x500q80.jpg" alt="" /></dt>
-                                <dd>
-                                    <div className="product_title">
-                                        温泉之旅 -> 广州往返清远白云温泉（车位）
-                                        </div>
-                                    <div className="group">
-                                        <Icon type="calendar" className="product_icon" />
-                                        <span>出发时间:</span>
-                                        <span>11月</span>
-                                    </div>
-                                    <div className="pro_tags">
-                                        <span>超值行程</span>
-                                    </div>
-                                    <div className="start">
-                                        出发地：广州
-                                        </div>
-                                    <div className="product_price">
-                                        <span className="unit">￥</span>
-                                        <span className="price">40</span>
-                                        <span className="qi">起</span>
-                                    </div>
-                                </dd>
-                            </dl>
-
-                        </div>
+                        {
+                            goodslist.map(item => {
+                                return <div className="content_item" key={item.gid}>
+                                    <dl>
+                                        <dt>
+                                            <img src={item.imgurl} />
+                                            <div className="tag">
+                                                {item.tag}
+                                            </div>
+                                        </dt>
+                                        <dd>
+                                            <div className="product_title">
+                                                {item.title}
+                                            </div>
+                                            <div className="group">
+                                                <Icon type="calendar" className="product_icon" />
+                                                <span>出发时间:</span>
+                                                <span>11月</span>
+                                            </div>
+                                            <div className="pro_tags">
+                                                <span>{item.pro_tags}</span>
+                                            </div>
+                                            <div className="start">
+                                                出发地：广州
+                                            </div>
+                                            <div className="product_price">
+                                                <span className="unit">￥</span>
+                                                <span className="price">{item.price}</span>
+                                                <span className="qi">起</span>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            })
+                        }
                     </div>
                 </div>
                 <footer className="List_footer">
                     <ul className="footer_ul">
                         <li className="footer_li"><Icon type="flag" /><p>线路玩法</p></li>
-                        <li className="footer_li"><Icon type="flag" /><p>目的地/出发地</p></li>
-                        <li className="footer_li"><Icon type="flag" /><p>时间/天数</p></li>
-                        <li className="footer_li"><Icon type="flag" /><p>综合排序</p></li>
+                        <li className="footer_li"><Icon type="global" /><p>目的地/出发地</p></li>
+                        <li className="footer_li"><Icon type="history" /><p>时间/天数</p></li>
+                        <li className="footer_li"><Icon type="control" onClick={this.showDrawer} /><p>综合排序</p></li>
+                        <Drawer
+                            title="综合排序"
+                            placement={this.state.placement}
+                            closable={false}
+                            onClose={this.onClose}
+                            visible={this.state.visible}
+                        >
+                            {/* <Icon type="check" /> */}
+                            <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
+                            <p onClick={this.asc.bind(this,current)}>价格从高到低</p>
+                        </Drawer>
                     </ul>
                 </footer>
             </>
