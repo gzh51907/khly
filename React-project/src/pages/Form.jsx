@@ -3,10 +3,21 @@ import '../sass/Form.scss';
 import '../sass/base.css';
 import { Menu, Icon, Tag, Badge, Radio } from 'antd';
 const RadioGroup = Radio.Group;
+
+
+// import { Control } from 'react-keeper'
+
 class Form extends Component {
     state = {
         value: 1,
     }
+
+    // 回到上一页
+    goBackpage = () => {
+        let { history } = this.props;
+        history.go(-1);
+    };
+
 
     onChange = (e) => {
         console.log('radio checked', e.target.value);
@@ -18,7 +29,7 @@ class Form extends Component {
         return (
             <div className="Form_content">
                 <div className="Form_Header">
-                    <a href="###" onClick={this.goto_back}>
+                    <a href="###" onClick={this.goBackpage}>
                         <span className="Header_icon">
                             <Icon type="left" />
                         </span>

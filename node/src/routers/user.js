@@ -1,6 +1,6 @@
 const express = require('express');
 const Router = express.Router();
-const {formatData} =require("../ustils");
+const {formatData,token} =require("../ustils");
 
 // 引入mongo数据库
 const {mongo} =require('../db');
@@ -13,7 +13,7 @@ Router.post('/reg',async (req,res)=>{
     let{username,password}=req.body;
     let result ;
     try{
-        await mongo.create(colName,[{username,password,regtime:new Date()}])
+        await mongo.create(colName,[{username,password,regtime:new Date()}],null)
         result=formatData();
     }catch{
         result=formatData({coke:0});
@@ -23,7 +23,7 @@ Router.post('/reg',async (req,res)=>{
 // 查询用户是否存在 0表示存在 1表示不存在用户
 Router.post('/check',async (req,res)=>{
     let{username}=req.body;
-    let result = await mongo.find(colName,{username});
+    let result = await mongo.find(colName,{username},null);
     // res.send(result);
     if (result.length) {
         res.send(formatData({
@@ -36,9 +36,13 @@ Router.post('/check',async (req,res)=>{
 // 登录用户  1登录成功 0登录失败
 Router.post('/login',async (req,res)=>{
     let{username,password}=req.body;
-    let result = await mongo.find(colName,{username,password});
+    console.log("body",username,password)
+    let result = await mongo.find(colName,{username,password},null);
     if (result.length) {
-        res.send(formatData());
+        Authorization = token.create(username);
+        res.send(formatData({
+            data: Authorization
+        }));
     } else {
         res.send(formatData({
             code: 0

@@ -1,26 +1,37 @@
 import React, { Component } from 'react';
 
-import { Icon, } from 'antd';
+import { Icon, message } from 'antd';
 
 import Api from '../Api'
-
 
 import '../sass/base.css';
 import '../sass/Login.scss';
 
+
+
 class Login extends Component {
-    login() {
+    async login() {
         let username = this.refs.username.value;
         let password = this.refs.password.value;
+       
         if (username && password) {
-            console.log('非空')
-            let data = Api.post("/user/check",{
-                username
+            let { code,data } = await Api.post("/user/login", {
+                username,
+                password
             })
             
-            console.log('后端返回',data)
+            if (code === 1) {
+                message.success('登录成功');
+                let { history } = this.props;
+                localStorage.setItem('username', JSON.stringify({username,Authorization:data}));
+                this.refs.username.value='';
+                this.refs.password.value='';
+                history.push('/home');
+            } else {
+                message.error('账号或密码有误');
+            }
         } else {
-            console.log('账号或密码不能为空')
+            message.warning('账号或密码不能为空');
         }
 
     }
@@ -34,7 +45,7 @@ class Login extends Component {
     }
     render() {
         return (
-            <div>
+            <div className="Login">
                 <div className="header">
                     <span className="header-l" onClick={this.retreat.bind(this)}>
                         <Icon type="left" className="header-icon" />
@@ -59,7 +70,7 @@ class Login extends Component {
                             <Icon type="unlock" />
                         </i>
                         <div className="mid">
-                            <input type="password" placeholder="请输入6-16位密码" ref='password' />
+                            <input type="password" placeholder="请输入6-16位包含字母、数字的密码" ref='password' />
                         </div>
                     </div>
                     <div className="btn">

@@ -3,12 +3,21 @@ import '../sass/Order.scss';
 import '../sass/base.css';
 import { Icon, Calendar, Tag } from 'antd';
 
+// import { Control } from 'react-keeper';
+
 class Order extends Component {
+
+    // 回到上一页
+    goGoods = () => {
+        let { history } = this.props;
+        history.go(-1);
+    };
+
     render() {
         return (
             <div className="Change_Data">
                 <div className="Goods_Header">
-                    <a href="###">
+                    <a href="###" onClick={this.goGoods}>
                         <span className="Header_icon">
                             <Icon type="left" />
                         </span>
@@ -37,7 +46,7 @@ class Order extends Component {
                 <footer>
 
                     <div className="Order_Price">总计<Tag color="orange" className="Total_Price">￥6666</Tag></div>
-                    <div className="Write_Order"> <Tag color="#f50" className="Go_Order">下一步填写订单</Tag></div>
+                    <div className="Write_Order"> <Tag color="#f50" className="Go_Order" onClick="onNextOrder">下一步填写订单</Tag></div>
 
                 </footer>
             </div>

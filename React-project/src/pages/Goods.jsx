@@ -3,48 +3,34 @@ import '../sass/Goods.scss';
 import '../sass/base.css';
 import { Menu, Icon, Tag, Badge, BackTop } from 'antd';
 
-//返回上一页这段代码
-// import creatHistory from 'history/createHashHistory';
-// import creatHistory from 'history.creatHashHistory';
-// require（"history"）.createHashHistory;
-// require（"history/createHashHistory"）;
-// const history = creatHistory();
-
+// import { Control } from 'react-keeper';
+import Api from '../Api';
 
 class Goods extends Component {
 
     state = {
         data: {}
     }
-    // super(props);
-    // 点击goto_back跳回上一页面
-    goto_back() {
-        // let { history } = this.props;
-        // history.push();
 
-        this.props.history.go(-1);
-    }
-
+    // 回到上一页
+    onHandleClick = () => {
+        let { history } = this.props;
+        history.go(-1);
+    };
 
     async componentDidMount() {
-        console.log("Goods.props", this.props);
         let { match } = this.props;
         // 接收gid
         let gid = match.params.id;
-
-        // let { datas } = await ExtensionScriptApis.length({
-        //     // 接收地址对象
-
-
-        // })
-
+        console.log("gid" + gid);
     }
 
     render() {
+
         return (
             <div className="Goods_content">
                 <div className="Goods_Header">
-                    <a href="###" onClick={this.goto_back}>
+                    <a href="###" onClick={this.onHandleClick}>
                         <span className="Header_icon">
                             <Icon type="left" />
                         </span>
@@ -62,6 +48,44 @@ class Goods extends Component {
                 </div>
 
                 <div className="Goods_Main">
+                    {
+                        // goods_data.map(item => {
+                        //     return
+                        //     <section className="Main_Detail">
+                        //     <div className="MD_img">
+                        //         <img width="100%" height="210px" src="http://i.cctcdn.com/up/i/1606/15/11cab92fe102.jpg_750x500q80.jpg"
+                        //             title="北京出发 日本本州精华+东京半日自由活动 +一晚日式温泉富士山五合目神鹿公园4晚6日"
+                        //             alt="康辉旅游网北京出发 日本本州精华+东京半日自由活动 +一晚日式温泉富士山五合目神鹿公园4晚6日" />
+                        //         <div className="To_Info MD_Type">跟团游</div>
+                        //         <div className="To_Info MD_Order">编号：<i>199999</i></div>
+                        //     </div>
+                        //     <div className="MD_info">
+                        //         <h1 className="Title">北京出发 日本本州精华+东京半日自由活动 +一晚日式温泉富士山五合目神鹿公园4晚6日</h1>
+                        //         <h2 className="Sub-title">海航直飞东京 半日自由活动提供接送  五合目 金阁寺 浅草寺 品日式美食</h2>
+                        //     </div>
+                        //     <div className="MD_Price">
+                        //         <span className="Sale-Price">
+                        //             <em>¥3999</em>起
+                        //         </span>
+                        //     </div>
+                        //     <div className="MD_tips">
+                        //         <i className="icon icon_msg_tip"></i>
+                        //         该产品的价格和团期会实时变动，下单后需要客服进行核实，核实无误后，即可支付
+                        //     </div>
+                        // </section>
+
+                        // <div className="Main_tourday">
+                        //     <h2 className="Tour_Time">选择出行日期</h2>
+                        //     <div className="Time-Detail">
+                        //         11月、12月多日期出发
+                        //         <Icon type="right" className="Right_Date" />
+                        //     </div>
+                        // </div>
+
+                        //     })
+                    }
+
+
                     <section className="Main_Detail">
                         <div className="MD_img">
                             <img width="100%" height="210px" src="http://i.cctcdn.com/up/i/1606/15/11cab92fe102.jpg_750x500q80.jpg"
@@ -84,6 +108,7 @@ class Goods extends Component {
                             该产品的价格和团期会实时变动，下单后需要客服进行核实，核实无误后，即可支付
                         </div>
                     </section>
+
                     <div className="Main_tourday">
                         <h2 className="Tour_Time">选择出行日期</h2>
                         <div className="Time-Detail">
@@ -151,7 +176,6 @@ class Goods extends Component {
                                         <span className="time">
                                             01:30
                                             <Badge count={"+" + 1 + "天"} style={{ backgroundColor: '#87d068' }} />
-                                            {/* <em className="flight-days">+1</em> */}
                                         </span><br />
                                         东京羽田机场
                                     </div>
@@ -201,14 +225,14 @@ class Goods extends Component {
                         <Icon type="user" />
                         <Tag>在线咨询</Tag>
                     </span>
-                    <span className="like_order">
+                    <span className="like_order" onClick={this.goForm}>
                         <Tag color="#f50" style={{ border: 'none' }}>立即预定</Tag>
                     </span>
                 </div>
 
                 <div>
                     <BackTop>
-                        <strong style={{ color: '#195' }}>回到顶部</strong>
+                        <strong style={{ color: 'green' }}><Icon type="up-circle" style={{ fontSize: 40 }} /></strong>
                     </BackTop>
                 </div>
             </div >

@@ -9,6 +9,7 @@ import Login from '@@/Login';
 import Goods from '@@/Goods';
 import List from '@@/List';
 import Order from '@@/Order';
+import SearchGoods from '@@/SearchGoods';
 import Form from '@@/Form';
 import './App.scss';
 
@@ -22,6 +23,7 @@ class App extends Component {
                     <Route path="/reg" component={Reg} />
                     <Route path="/login" component={Login} />
                     <Route path="/list" component={List} />
+                    <Route path="/search/:title" component={SearchGoods} />
                     <Route path="/goods/:id" component={Goods} />
                     <Route path="/order/:id" component={Order} />
                     <Route path="/form/:id" component={Form} />

@@ -79,13 +79,14 @@ class Home extends Component {
         })
     }
     async componentDidMount() {
-        let { current, home_goods } = this.state;
+        let { current } = this.state;
         let data = await Api.get('goods/getgoods', {
             tag: current
         })
         this.setState({
             home_goods: data
         })
+        console.log(data)
     }
 
     render() {
@@ -104,9 +105,8 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
-                            //去e ===========================================
-                            // onPressEnter={this.search_goods.bind(this,e)}
-                            onPressEnter={this.search_goods.bind(this)}
+                        // value
+                        // onSearch={this.goto_search.bind(this)}
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
@@ -210,7 +210,6 @@ class Home extends Component {
                                 onClick={this.tab.bind(this, item.goodsTag)}
                                 style={{ width: '33.3%', height: 50, textAlign: "center" }}>
                                 {item.text}
-
                             </Menu.Item>)
                         }
 
