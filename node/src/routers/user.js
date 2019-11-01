@@ -1,6 +1,6 @@
 const express = require('express');
 const Router = express.Router();
-const {formatData} =require("../ustils");
+const {formatData,token} =require("../ustils");
 
 // 引入mongo数据库
 const {mongo} =require('../db');
@@ -38,7 +38,10 @@ Router.post('/login',async (req,res)=>{
     let{username,password}=req.body;
     let result = await mongo.find(colName,{username,password});
     if (result.length) {
-        res.send(formatData());
+        Authorization = token.create(username);
+        res.send(formatData({
+            data: Authorization
+        }));
     } else {
         res.send(formatData({
             code: 0
