@@ -12,7 +12,7 @@ class User extends Component {
     }
     async componentDidMount() {
         console.log('进入页面');
-        let userlist = await Api.get("/user", {});
+        let userlist = await Api.post("/user", {});
         this.setState({
             listData: userlist
         })
