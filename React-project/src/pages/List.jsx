@@ -60,6 +60,10 @@ class List extends Component {
         let { history } = this.props;
         history.push('/goods/' + gid)
     }
+    goto_search = async () => {
+        let { history } = this.props;
+        history.push('/search/' )
+    }
     //升序
     asc = async () => {
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
@@ -127,9 +131,7 @@ class List extends Component {
                         <h1>康辉旅游</h1>
                     </div>
                     <span className="list_right">
-                        {/* <a href="###"> */}
-                        <Icon type="search" className="search_icon" />
-                        {/* </a> */}
+                        <Icon type="search" className="search_icon" onClick={this.goto_search}/>  
                     </span>
                 </header>
                 <Menu
