@@ -54,7 +54,7 @@ Router.get('/search', async (req, res) => {
 Router.get('/', async (req, res) => {
     let result
     try {
-        result = await mongo.find(colName, req.query);
+        result = await mongo.find(colName, req.query,null);
     } catch (err) {
         result = formatData({
             code: "0"
