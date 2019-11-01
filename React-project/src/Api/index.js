@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let KHLY = axios.create({
-    baseURL:'http://localhost:12345'
+    baseURL:'http://119.23.107.32:12345'
 })
 
 export async function get(url,params,config={}){
@@ -13,10 +13,6 @@ export async function get(url,params,config={}){
 }
 
 export async function post(url,params,config={}){
-<<<<<<< HEAD
-=======
-    // console.log("后台",url,params, config)
->>>>>>> 10eb675fdbe0d7f0e3b5a042dce1175fa77e562a
     let {data} = await KHLY.post(url,params,config);
     return data
 }

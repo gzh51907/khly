@@ -14,9 +14,51 @@ const { SubMenu } = Menu;
 class App extends Component {
     state = {
         collapsed: false,
-        Primary: '商品管理',
-        SubTitle: '商品信息'
+        Primary: '',
+        SubTitle: ''
     };
+    componentWillMount() {
+        let user = localStorage.getItem("adminurl");
+        if (user) {
+            user = user.substr(2);
+            user = user.substr(0, user.length - 1)
+
+            if (user === 'goods') {
+
+                this.setState({
+                    Primary: '商品管理',
+                    SubTitle: '商品信息',
+                })
+            }
+            if (user === 'addgoods') {
+
+                this.setState({
+                    Primary: '商品管理',
+                    SubTitle: '添加商品',
+                })
+            }
+            if (user === 'user') {
+                this.setState({
+                    Primary: '用户管理',
+                    SubTitle: '用户信息',
+                })
+            }
+            if (user === 'adduser') {
+                this.setState({
+                    Primary: '用户管理',
+                    SubTitle: '添加用户',
+                })
+            }
+        }
+
+    }
+    componentDidMount() {
+        this.props.history.listen(() => {
+            let { history } = this.props;
+            let url = history.location.pathname;
+            localStorage.setItem('adminurl', JSON.stringify(url));
+        })
+    }
     onCollapse = collapsed => {
         this.setState({ collapsed });
     };

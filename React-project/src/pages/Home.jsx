@@ -79,13 +79,14 @@ class Home extends Component {
         })
     }
     async componentDidMount() {
-        let { current, home_goods } = this.state;
+        let { current} = this.state;
         let data = await Api.get('goods/getgoods', {
             tag: current
         })
         this.setState({
             home_goods: data
         })
+        console.log(data)
     }
 
     render() {

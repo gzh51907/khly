@@ -13,11 +13,13 @@ class Login extends Component {
     async login() {
         let username = this.refs.username.value;
         let password = this.refs.password.value;
+       
         if (username && password) {
             let { code,data } = await Api.post("/user/login", {
                 username,
                 password
             })
+            
             if (code === 1) {
                 message.success('登录成功');
                 let { history } = this.props;
