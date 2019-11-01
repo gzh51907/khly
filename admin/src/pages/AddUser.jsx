@@ -4,7 +4,6 @@ import '../sass/AddUser.scss'
 import { message } from 'antd';
 import Api from '../Api';
 class AddUser extends Component {
-
     async AddUser() {
         let username = this.refs.username.value;
         let password = this.refs.password.value;
@@ -20,7 +19,9 @@ class AddUser extends Component {
                     password
                 })
                 if (code === 1) {
-                    message.success('注册成功')
+                    message.success('注册成功');
+                    this.refs.username.value='';
+                    this.refs.password.value='';
                 } else {
                     message.warning('注册失败');
                 }
@@ -28,9 +29,6 @@ class AddUser extends Component {
             } else {
                 message.warning('账号已存在');
             }
-
-
-
         } else {
             console.log("账号或密码不能为空")
         }
@@ -44,7 +42,7 @@ class AddUser extends Component {
                 </div>
                 <div className="usertext">
                     <span className="userspan">密码：</span>
-                    <input type="text" className="text" ref="password" />
+                    <input type="password" className="text" ref="password" />
                 </div>
                 <div><input type="button" value="添加用户" className="btn" onClick={this.AddUser.bind(this)} /></div>
             </div>
