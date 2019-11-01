@@ -61,5 +61,23 @@ Router.post('/login',async (req,res)=>{
         }))
     }
 })
-
+// 删除用户
+Router.post("/dele", async (req, res) => {
+    let {
+        username
+    } = req.body;
+    // console.log("后台接收",username)
+    let result;
+    try {
+        result = await mongo.remove(colName, {
+            username: username
+        })
+        result = formatData()
+    } catch {
+        result = formatData({
+            code: "0"
+        })
+    }
+    res.send(result);
+})
 module.exports=Router;

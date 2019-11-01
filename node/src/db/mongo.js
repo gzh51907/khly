@@ -57,9 +57,22 @@ async function search(colName, query = {}) {
     client.close();
     return result;
 }
+// 删除
+async function remove(colName, query={}) {
+    let {
+        db,
+        client
+    } = await connect();
+    // 获取集合
+    let col = db.collection(colName);
+    let result = await col.deleteMany(query);
+    client.close();
 
+    return result;
+}
 module.exports = {
     create,
     find,
-    search
+    search,
+    remove
 }
