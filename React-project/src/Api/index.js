@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let KHLY = axios.create({
-    baseURL:'http://119.23.107.32:12345'
+    baseURL:'http://localhost:12345'
 })
 
 export async function get(url,params,config={}){
@@ -20,5 +20,6 @@ export async function post(url,params,config={}){
 export default {
     get,
     post,
-    axios
+    axios,
+    patch
 }

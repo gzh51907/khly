@@ -190,9 +190,6 @@ class Home extends Component {
                 </Row>
                 <div className="lunbo">
                     <Carousel autoplay>
-                        {/* {
-                            lunbo.map(item => <img src={item.imageUrl} key={item.xuhao} />)
-                        } */}
                         <img src={require('../images/shouye/lunbo/lunbo1.jpg')} />
                         <img src={require('../images/shouye/lunbo/lunbo2.jpg')} />
                         <img src={require('../images/shouye/lunbo/lunbo3.jpg')} />
