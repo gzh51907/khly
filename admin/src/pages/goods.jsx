@@ -3,6 +3,7 @@ import { Table, Divider, Tag, Button, Drawer, Form, Col, Row, Input, Select, Dat
 import Api from '@/Api';
 import '../sass/goods.scss';
 // const { Column, ColumnGroup } = Table;
+const ButtonGroup = Button.Group;
 
 // var visible = false;
 
@@ -50,27 +51,10 @@ const columns = [
         dataIndex: 'operation',
         render: () => {
             return <>
-                <Button type="primary" >
-                    <Icon type="plus" /> 编辑
-                </Button>
-                {/* <Drawer
-                    title="Create a new account"
-                    width={720}
-                    onClose={this.onClose}
-                    visible={this.state.visible}
-                >
-                    <Form layout="vertical" hideRequiredMark>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Form.Item label="Name">
-                                {getFieldDecorator('name', {
-                                    rules: [{ required: true, message: 'Please enter user name' }],
-                                })(<Input placeholder="Please enter user name" />)}
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </Form>
-                </Drawer> */}
+                <ButtonGroup >
+                    <Button type="primary" size="large" icon="edit" >编辑</Button>
+                    <Button type="primary" size="large" icon="delete" >删除</Button>
+                </ButtonGroup>
             </>
         }
     },
@@ -79,24 +63,24 @@ const columns = [
 class Goods extends Component {
     state = {
         goodslist: [],
-        visible: false
+        // visible: false
     }
 
-    showDrawer = () => {
-        this.setState({
-            visible: true,
-        });
-    };
+    // showDrawer = () => {
+    //     this.setState({
+    //         visible: true,
+    //     });
+    // };
 
-    onClose = () => {
-        this.setState({
-            visible: false,
-        });
-    };
+    // onClose = () => {
+    //     this.setState({
+    //         visible: false,
+    //     });
+    // };
     async componentDidMount() {
         let data = await Api.get('goods', {
         }, null)
-        console.log(data)
+        // console.log(data)
         this.setState({
             goodslist: data
         })
@@ -105,7 +89,7 @@ class Goods extends Component {
         let { goodslist, } = this.state;
         return (
             <>
-                <Table columns={columns} dataSource={goodslist}  />
+                <Table columns={columns} dataSource={goodslist} />
             </>
         )
     }
