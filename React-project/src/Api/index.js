@@ -19,5 +19,6 @@ export async function post(url,params,config={}){
 
 export default {
     get,
-    post
+    post,
+    axios
 }
