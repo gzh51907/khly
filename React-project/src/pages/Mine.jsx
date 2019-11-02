@@ -29,10 +29,10 @@ class Mine extends Component {
         })
     }
 
-    out(){
+    out() {
         let { history } = this.props;
         history.push('/home')
-        localStorage.setItem('username',"")
+        localStorage.setItem('username', "")
     }
 
     render() {
@@ -41,12 +41,12 @@ class Mine extends Component {
             <div>
                 {
                     user ? <><Avatar
-                    className={(this.state.hover?'myHover':'')}
+                        className={(this.state.hover ? 'myHover' : '')}
                         onMouseEnter={this.mouse_hover.bind(this)}
                         onMouseLeave={this.mouse_leave.bind(this)}
-                        src="../images/touxiang.png" />
-                        <span style={{ fontSize: 16, margin: 10,marginLeft:20 }}>{user}</span>
-                        <span style={{ color: 'red',cursor:'pointer' }} onClick={this.out.bind(this)}>退出</span>
+                        src={require("../images/touxiang.png")} />
+                        <span style={{ fontSize: 16, margin: 10, marginLeft: 20 }}>{user}</span>
+                        <span style={{ color: 'red', cursor: 'pointer' }} onClick={this.out.bind(this)}>退出</span>
                     </> : <p>请先登录</p>
                 }
                 <div className="cont">
