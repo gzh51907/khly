@@ -51,7 +51,7 @@ class Home extends Component {
         user: ""
     }
     // 跳转list
-    goto_guonei = async () => {
+    goto_list = async () => {
         let { history } = this.props;
         history.push('/list')
     }
@@ -86,7 +86,13 @@ class Home extends Component {
     };
 
     goto_robit = () => {
+        let { history } = this.props;
+        history.push('/robit');
+    }
 
+    goto_mine(){
+        let { history } = this.props;
+        history.push('/mine');
     }
 
     tab = async (tag) => {
@@ -168,13 +174,13 @@ class Home extends Component {
                                 border: '1px solid #ccc'
                             }}
                                 onClick={this.goto_robit.bind(this)}
-                            ><Icon type="wechat" style={{ color: 'green' }} /> 在线客服</p>
+                            ><Icon type="wechat" style={{ color: 'green' }} onClick={this.goto_robit.bind(this)}/> 在线客服</p>
                         </Drawer>
                     </Col>
                     <Col span={2}>
                         {
                             user ? <Badge dot>
-                                <Icon type="user" style={{ fontSize: 25 }} />
+                                <Icon type="user" style={{ fontSize: 25 }}  onClick={this.goto_mine.bind(this)}/>
                             </Badge> : <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_login.bind(this)} />
 
                         }
@@ -188,19 +194,19 @@ class Home extends Component {
                         }
                     </Carousel>
                     <ul className="fenlei">
-                        <li>
+                        <li onClick={this.goto_list.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/zhoubian.png" />
                             </i>
                             <span>周边游</span>
                         </li>
-                        <li onClick={this.goto_guonei.bind(this)}>
+                        <li onClick={this.goto_list.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/guonei.png" />
                             </i>
                             <span>国内游</span>
                         </li>
-                        <li>
+                        <li onClick={this.goto_list.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/chujing.png" />
                             </i>

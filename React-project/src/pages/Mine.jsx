@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Avatar,Icon } from 'antd';
+import { Avatar, Icon } from 'antd';
 import '@/sass/Mine.scss';
 
 class Mine extends Component {
     state = {
-        user: ''
+        user: '',
+        hover: false
     }
     componentDidMount() {
         let user = localStorage.getItem('username');
@@ -15,15 +16,37 @@ class Mine extends Component {
         })
     }
 
+    mouse_hover() {
+        console.log('鼠标移入')
+        this.setState({
+            hover: true
+        })
+    }
+    mouse_leave() {
+        console.log('鼠标移出')
+        this.setState({
+            hover: false
+        })
+    }
+
+    out(){
+        let { history } = this.props;
+        history.push('/home')
+        localStorage.setItem('username',"")
+    }
+
     render() {
         let { user } = this.state;
-        console.log(user)
         return (
             <div>
                 {
-                    user ? <><Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        <span style={{ fontSize: 16, margin: 10 }}>{user}</span>
-                        <span style={{ color: 'red' }}>退出</span>
+                    user ? <><Avatar
+                    className={(this.state.hover?'myHover':'')}
+                        onMouseEnter={this.mouse_hover.bind(this)}
+                        onMouseLeave={this.mouse_leave.bind(this)}
+                        src="../images/touxiang.png" />
+                        <span style={{ fontSize: 16, margin: 10,marginLeft:20 }}>{user}</span>
+                        <span style={{ color: 'red',cursor:'pointer' }} onClick={this.out.bind(this)}>退出</span>
                     </> : <p>请先登录</p>
                 }
                 <div className="cont">
@@ -50,23 +73,23 @@ class Mine extends Component {
                                 </div>
                                 <ul>
                                     <li className="order-list">
-                                    <Icon type="dollar" />
+                                        <Icon type="dollar" />
                                         <p>待付款</p>
                                     </li>
                                     <li className="order-list">
-                                    <Icon type="account-book" />
+                                        <Icon type="account-book" />
                                         <p>待发货</p>
                                     </li>
                                     <li className="order-list">
-                                    <Icon type="car" />
+                                        <Icon type="car" />
                                         <p>待收货</p>
                                     </li>
                                     <li className="order-list">
-                                    <Icon type="compass" />
+                                        <Icon type="compass" />
                                         <p>待自提</p>
                                     </li>
                                     <li className="order-list">
-                                    <Icon type="form" />
+                                        <Icon type="form" />
                                         <p>评价</p>
                                     </li>
                                 </ul>
@@ -81,15 +104,15 @@ class Mine extends Component {
                                 </div>
                                 <ul>
                                     <li className="server-list address-manage">
-                                    <Icon type="environment" />
+                                        <Icon type="environment" />
                                         <p>地址管理</p>
                                     </li>
                                     <li className="server-list">
-                                    <Icon type="snippets" />
+                                        <Icon type="snippets" />
                                         <p>电子发票</p>
                                     </li>
                                     <li className="server-list">
-                                    <Icon type="share-alt" />
+                                        <Icon type="share-alt" />
                                         <p>浏览记录</p>
                                     </li>
                                 </ul>

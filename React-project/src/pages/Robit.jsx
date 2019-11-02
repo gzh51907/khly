@@ -14,6 +14,11 @@ class Robit extends Component {
         total_list: ['您好，有什么可以帮您的吗']
     }
 
+    goto_home(){
+        let { history } = this.props;
+        history.push('/home');
+    }
+
     //input的onChange绑定事件
     handleData(e) {
         this.setState({
@@ -55,9 +60,9 @@ class Robit extends Component {
                     },
                     "selfInfo": {
                         "location": {
-                            "city": "北京",
-                            "province": "北京",
-                            "street": "信息路"
+                            "city": "广州",
+                            "province": "广州",
+                            "street": "元岗横路"
                         }
                     }
                 },
@@ -88,29 +93,26 @@ class Robit extends Component {
     render() {
         // meg：输入的值，respon:机器人返回值，megArray:用户发送的值
         var meg = this.state.meg
-        // var megArray = this.state.megArray
-        // var respon = this.state.respon
         let { total_list } = this.state;
-        console.log('total_list', total_list)
         return (
             <div className="msg-list">
-                <div className="tishi">客服小薇已成功接入……</div>
+                <div className="tishi">
+                <Icon type="home"  onClick={this.goto_home.bind(this)} style={{marginRight:20}}/>
+                    客服小薇已成功接入……</div>
                 <ul ref={el=>{this.ulDOM=el}}>
                     {
                         total_list.map((item,index) => {
                             if (index % 2 !== 0) {
                                 return (
                                     <li key={index} className="user_txt" style={{ backgroundColor: '#58bc58' }}>
-                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                                        <p>用户:</p>
+                                        <img className="user_img" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />               
                                         <div className="toke">{item}</div>
                                         <time>{new Date(Date.now()).toLocaleString()}</time>
                                     </li>
                                 )
                             } else {
                                 return (<li  key={index} className="robit_txt" style={{ backgroundColor: '#f7f7f7', left: 50 }}>
-                                    <img src="../images/shouye/tubiao/apple-touch-icon.png" />
-                                    <p>小薇:</p>
+                                    <img src="../images/shouye/tubiao/apple-touch-icon.png" />                     
                                     <div className="toke">{item}</div>
                                     <time>{new Date(Date.now()).toLocaleString()}</time>
                                 </li>
