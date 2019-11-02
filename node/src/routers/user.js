@@ -33,6 +33,18 @@ Router.post('/check',async (req,res)=>{
         res.send(formatData());
     }
 })
+// 查询所有用户
+Router.get('/', async (req, res) => {
+    let result
+    try {
+        result = await mongo.find(colName, req.query, null);
+    } catch (err) {
+        result = formatData({
+            code: "0"
+        })
+    }
+    res.send(result);
+})
 // 登录用户  1登录成功 0登录失败
 Router.post('/login',async (req,res)=>{
     let{username,password}=req.body;
@@ -49,5 +61,23 @@ Router.post('/login',async (req,res)=>{
         }))
     }
 })
-
+// 删除用户
+Router.post("/dele", async (req, res) => {
+    let {
+        username
+    } = req.body;
+    // console.log("后台接收",username)
+    let result;
+    try {
+        result = await mongo.remove(colName, {
+            username: username
+        })
+        result = formatData()
+    } catch {
+        result = formatData({
+            code: "0"
+        })
+    }
+    res.send(result);
+})
 module.exports=Router;

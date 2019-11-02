@@ -43,5 +43,6 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2",
     "whatwg-fetch": "^3.0.0"
-  }
+  },
+  "proxy": "http://119.23.107.32:27017"
 }

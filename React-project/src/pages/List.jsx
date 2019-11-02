@@ -6,7 +6,9 @@ import '../sass/List.scss';
 class List extends Component {
     state = {
         visible: false,
+        visible2: false,
         placement: 'bottom',
+        placement2: 'bottom',
         current: '产品推荐',
         menu: [
             {
@@ -22,8 +24,29 @@ class List extends Component {
                 text: '当地玩乐'
             },
         ],
-        goodslist: []
+        goodslist: [],
+        date: [
+            {
+                name: '元旦'
+            },
+            {
+                name: '春节'
+            },
+            {
+                name: '清明'
+            },
+            {
+                name: '五一'
+            },
+            {
+                name: '11月'
+            },
+            {
+                name: '12月'
+            },
+        ]
     }
+    //切换tab标签
     goto = async (text) => {
         let data = await Api.get('goods/getgoods', {
             tag: text
@@ -32,31 +55,51 @@ class List extends Component {
             goodslist: data
         });
     }
-    asc = async () => { //升序
+    // 跳转详情页
+    goto_goods = async (gid) => {
+        let { history } = this.props;
+        history.push('/goods/' + gid)
+    }
+    goto_search = async () => {
+        let { history } = this.props;
+        history.push('/search/' )
+    }
+    //升序
+    asc = async () => {
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
-            { sort:-1 },
+            { sort: -1 },
         );
         this.setState({
-            goodslist:data
+            goodslist: data
         })
     }
-    desc = async () => { //降序
+    //降序
+    desc = async () => {
         let data = await Api.post(`goods/sort?tag=${this.state.current}`,
-            { sort:1 },
+            { sort: 1 },
         );
         this.setState({
-            goodslist:data
+            goodslist: data
         })
     }
+    //弹窗
     showDrawer = () => {
         this.setState({
             visible: true,
         });
-    };
 
+    };
+    showDrawer2 = () => {
+        this.setState({
+            visible2: true,
+        });
+    };
     onClose = () => {
         this.setState({
             visible: false,
+        });
+        this.setState({
+            visible2: false,
         });
     };
 
@@ -75,7 +118,7 @@ class List extends Component {
         })
     }
     render() {
-        let { menu, current, goodslist } = this.state;
+        let { menu, current, goodslist, date } = this.state;
         // console.log(goodslist)
         return (
             <>
@@ -88,9 +131,7 @@ class List extends Component {
                         <h1>康辉旅游</h1>
                     </div>
                     <span className="list_right">
-                        {/* <a href="###"> */}
-                        <Icon type="search" className="search_icon" />
-                        {/* </a> */}
+                        <Icon type="search" className="search_icon" onClick={this.goto_search}/>  
                     </span>
                 </header>
                 <Menu
@@ -108,6 +149,7 @@ class List extends Component {
                             <Menu.Item
                                 onClick={this.goto.bind(this, item.text)}
                                 key={item.text}
+                                className="list_li"
                             >
                                 {item.text}
                             </Menu.Item>
@@ -118,7 +160,10 @@ class List extends Component {
                     <div className="content">
                         {
                             goodslist.map(item => {
-                                return <div className="content_item" key={item.gid}>
+                                return <div className="content_item"
+                                    key={item.gid}
+                                    onClick={this.goto_goods.bind(this, item.gid)}
+                                >
                                     <dl>
                                         <dt>
                                             <img src={item.imgurl} />
@@ -136,7 +181,8 @@ class List extends Component {
                                                 <span>11月</span>
                                             </div>
                                             <div className="pro_tags">
-                                                <span>{item.pro_tags}</span>
+                                                <span className="bor-all">{item.pro_tags}</span>
+                                                <span className="bor-all">{item.pro_tags1}</span>
                                             </div>
                                             <div className="start">
                                                 出发地：广州
@@ -157,7 +203,7 @@ class List extends Component {
                     <ul className="footer_ul">
                         <li className="footer_li"><Icon type="flag" /><p>线路玩法</p></li>
                         <li className="footer_li"><Icon type="global" /><p>目的地/出发地</p></li>
-                        <li className="footer_li"><Icon type="history" /><p>时间/天数</p></li>
+                        <li className="footer_li"><Icon type="history" onClick={this.showDrawer2} /><p>时间/天数</p></li>
                         <li className="footer_li"><Icon type="control" onClick={this.showDrawer} /><p>综合排序</p></li>
                         <Drawer
                             title="综合排序"
@@ -166,9 +212,36 @@ class List extends Component {
                             onClose={this.onClose}
                             visible={this.state.visible}
                         >
-                            {/* <Icon type="check" /> */}
-                            <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
-                            <p onClick={this.asc.bind(this,current)}>价格从高到低</p>
+                            {/* <p onClick={this.desc.bind(this, current)}>价格从低到高</p>
+                            <p onClick={this.asc.bind(this,current)}>价格从高到低</p> */}
+                            <Menu
+                                style={{ width: '100%' }}
+                            // selectedKeys={current2}
+                            >
+                                <Menu.Item onClick={this.desc.bind(this, current)}>
+                                    价格从低到高
+                             </Menu.Item>
+                                <Menu.Item onClick={this.asc.bind(this, current)}>
+                                    价格从高到低
+                             </Menu.Item>
+                            </Menu>
+                        </Drawer>
+                        <Drawer
+                            title="出游时间"
+                            placement={this.state.placement}
+                            closable={false}
+                            onClose={this.onClose}
+                            visible={this.state.visible2}
+                        >
+                            <Menu style={{ width: '100%' }}>
+                                {
+                                    date.map(item => {
+                                        return <Menu.Item key={item.name}>
+                                            {item.name}
+                                        </Menu.Item>
+                                    })
+                                }
+                            </Menu>
                         </Drawer>
                     </ul>
                 </footer>

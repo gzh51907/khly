@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu, BackTop } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Badge } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -46,7 +46,8 @@ class Home extends Component {
             imageUrl: '../images/shouye/lunbo/lunbo5.jpg'
         }],
         home_goods: [],
-        current: '自由行'
+        current: '自由行',
+        user: ""
     }
     // 跳转list
     goto_guonei = async () => {
@@ -62,12 +63,12 @@ class Home extends Component {
     goto_goods = async (gid) => {
         let { history } = this.props;
         history.push('/goods/' + gid)
-
     }
 
     // 模糊查询
-    search_goods = async (e) => {
-        console.log(e)
+    goto_search = async (val) => {
+        let { history } = this.props;
+        history.push('/search/' + val)
     }
 
     tab = async (tag) => {
@@ -78,6 +79,7 @@ class Home extends Component {
             home_goods: data,
         })
     }
+
     async componentDidMount() {
         let { current } = this.state;
         let data = await Api.get('goods/getgoods', {
@@ -86,11 +88,17 @@ class Home extends Component {
         this.setState({
             home_goods: data
         })
-        console.log(data)
+
+        // 判断是否登录
+        let user = localStorage.getItem('username');
+        this.setState({
+            user: user
+        })
     }
 
     render() {
-        let { selected, menu, lunbo, home_goods } = this.state;
+        let { selected, menu, lunbo, home_goods, user } = this.state;
+        console.log('user', user)
 
         return (
             <div style={{ backgroundColor: '#f1f1f1' }}>
@@ -110,12 +118,20 @@ class Home extends Component {
                         />
                     </Col>
                     <Col span={2}><Icon type="phone" /></Col>
-                    <Col span={2}><Icon type="user" onClick={this.goto_login.bind(this)} /></Col>
+                    <Col span={2}>
+                        {
+                            user ? <Badge dot>
+                                <Icon type="user" style={{ fontSize: 25 }} />
+                            </Badge> : <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_login.bind(this)} />
+
+                        }
+
+                    </Col>
                 </Row>
                 <div className="lunbo">
                     <Carousel autoplay>
                         {
-                            lunbo.map(item => <img src={item.imageUrl} key={item.xuhao} />)
+                            lunbo.map((item, key) => <img src={item.imageUrl} key={item.xuhao} />)
                         }
                     </Carousel>
                     <ul className="fenlei">
@@ -206,7 +222,7 @@ class Home extends Component {
                         }}
                     >
                         {
-                            menu.map(item => <Menu.Item key={item.name}
+                            menu.map((item, key) => <Menu.Item key={item.name}
                                 onClick={this.tab.bind(this, item.goodsTag)}
                                 style={{ width: '33.3%', height: 50, textAlign: "center" }}>
                                 {item.text}
@@ -216,7 +232,7 @@ class Home extends Component {
                     </Menu >
                     <div>
                         {
-                            home_goods.map(item => {
+                            home_goods.map((item, key) => {
                                 return <div className="home_item" key={item.gid} onClick={this.goto_goods.bind(this, item.gid)}>
                                     <h4>
                                         <span>{item.tag}</span> |

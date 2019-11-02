@@ -1,6 +1,7 @@
 .Goods_content {
     width: 100%;
     background: rgb(219, 218, 218);
+    height: auto;
 
     .Goods_Header {
         width: 100%;
@@ -255,13 +256,13 @@
     }
 
     .Goods_Footer {
+        position: fixed;
+        bottom: 0;
+        display: flex;
         width: 100%;
         height: 44px;
         background: #fff;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        display: flex;
+        z-index: 1000;
 
         span {
             width: 120px;
