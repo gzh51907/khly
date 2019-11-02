@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Select, Input, Button, Upload, Icon } from 'antd';
+import { Form, Select, Input, Button, Upload, Icon ,message} from 'antd';
 import Api from '@/Api';
 import '../sass/AddGoods.scss'
 
@@ -10,7 +10,7 @@ const formItemLayout = {
     wrapperCol: { span: 8 },
 };
 
-
+const key = 'updatable';
 class AddGoods extends Component {
 
     state = {
@@ -19,22 +19,40 @@ class AddGoods extends Component {
 
 
     check = async () => {
+       
         // console.log(dragger.value)
-        // this.props.form.validateFields(err => {
-        //     if (!err) {
-               
-        //     }
-        // });
-        await Api.post('goods/add', {
-            gid: gid.value,
-            title: title.value,
-            tag: tags.value,
-            pro_tags: pro_tags.value,
-            price: price.value,
-            pro_tags1: pro_tags1.value
-        })
-    };
+        this.props.form.validateFields(async err => {
+            if (!err) {
+                message.loading({ content: '增加商品成功...', key });
+                setTimeout(() => {
+                    message.success({ content: '增加商品成功!', key, duration: 2 });
+                });
+                await Api.post('goods/add', {
+                    gid: parseInt(gid.value),
+                    title: title.value,
+                    tag: tags.value,
+                    pro_tags: pro_tags.value,
+                    price: price.value,
+                    pro_tags1: pro_tags1.value
+                })
 
+            }else{
+                message.loading({ content: '请输入完整的商品信息...', key });
+                setTimeout(() => {
+                    message.info({ content: '请输入完整的商品信息...', key, duration: 2 });
+                });
+            }
+        });
+
+    };
+    normFile = e => {
+
+        console.log('Upload event:', 'http://' + e.file.name);
+        if (Array.isArray(e)) {
+            return e;
+        }
+        return e && e.fileList;
+    };
     render() {
 
         let { getFieldDecorator } = this.props.form;
@@ -47,7 +65,7 @@ class AddGoods extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your gid',
+                                    message: '请输入您的gid',
                                 },
                             ],
                         })(<Input placeholder="Please input your gid" />)}
@@ -57,7 +75,7 @@ class AddGoods extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your title',
+                                    message: '请输入标题',
                                 },
                             ],
                         })(<Input placeholder="Please input your title" />)}
@@ -67,7 +85,7 @@ class AddGoods extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your tag',
+                                    message: '请输入标签',
                                 },
                             ],
                         })(<Input placeholder="Please input your tag" />)}
@@ -77,7 +95,7 @@ class AddGoods extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your pro_tags',
+                                    message: '请输入pro标签',
                                 },
                             ],
                         })(<Input placeholder="Please input your pro_tags" />)}
@@ -87,7 +105,7 @@ class AddGoods extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your 价格',
+                                    message: '请输入价格',
                                 },
                             ],
                         })(<Input placeholder="Please input your price" />)}
@@ -97,13 +115,16 @@ class AddGoods extends Component {
                             rules: [
                                 {
                                     required: true,
-                                    message: 'Please input your pro_tags1',
+                                    message: '请输入pro标签1',
                                 },
                             ],
                         })(<Input placeholder="Please input your pro_tags1" />)}
                     </Form.Item>
-                    <Form.Item label="Dragger">
-                      
+                    <Form.Item {...formItemLayout} label="图片">
+                        {getFieldDecorator('dragger', {
+                            valuePropName: 'fileList',
+                            getValueFromEvent: this.normFile,
+                        })(
                             <Upload.Dragger name="files" action="/upload.do">
                                 <p className="ant-upload-drag-icon">
                                     <Icon type="inbox" />
@@ -111,10 +132,11 @@ class AddGoods extends Component {
                                 <p className="ant-upload-text">Click or drag file to this area to upload</p>
                                 <p className="ant-upload-hint">Support for a single or bulk upload.</p>
                             </Upload.Dragger>,
-                        
+                        )}
                     </Form.Item>
-                    <Form.Item wrapperCol={{ span: 12, offset: 5 }} >
+                    <Form.Item wrapperCol={{ span: 8, offset: 4 }} >
                         <Button type="primary"
+                            style={{ width: '100%' }}
                             htmlType="submit"
                             onClick={this.check}>
                             保存
