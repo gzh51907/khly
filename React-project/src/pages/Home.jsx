@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button,Badge } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button, Badge } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -69,7 +69,7 @@ class Home extends Component {
     // 模糊查询
     goto_search = async () => {
         let { history } = this.props;
-        history.push('/search' )
+        history.push('/search')
     }
 
     // 出现联系方式和关闭1
@@ -90,7 +90,7 @@ class Home extends Component {
         history.push('/robit');
     }
 
-    goto_mine(){
+    goto_mine() {
         let { history } = this.props;
         history.push('/mine');
     }
@@ -135,12 +135,7 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
-<<<<<<< HEAD
-                        // value
-                        // onSearch={this.goto_search.bind(this)}
-=======
                             onClick={this.goto_search.bind(this)}
->>>>>>> a145269dd75ed173beb1f39a03577a427d2daede
                         />
                     </Col>
                     <Col span={2}>
@@ -160,7 +155,7 @@ class Home extends Component {
                             closable={true}
                             onClose={this.onClose}
                             visible={this.state.visible}
-                            style={{display:'block'}}
+                            style={{ display: 'block' }}
                         >
                             <p style={{
                                 height: 40,
@@ -180,13 +175,13 @@ class Home extends Component {
                                 border: '1px solid #ccc'
                             }}
                                 onClick={this.goto_robit.bind(this)}
-                            ><Icon type="wechat" style={{ color: 'green' }} onClick={this.goto_robit.bind(this)}/> 在线客服</p>
+                            ><Icon type="wechat" style={{ color: 'green' }} onClick={this.goto_robit.bind(this)} /> 在线客服</p>
                         </Drawer>
                     </Col>
                     <Col span={2}>
                         {
                             user ? <Badge dot>
-                                <Icon type="user" style={{ fontSize: 25 }}  onClick={this.goto_mine.bind(this)}/>
+                                <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_mine.bind(this)} />
                             </Badge> : <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_login.bind(this)} />
 
                         }

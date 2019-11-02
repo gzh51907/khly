@@ -10,6 +10,7 @@ import Goods from '@@/Goods';
 import List from '@@/List';
 import Mine from '@@/Mine';
 import Order from '@@/Order';
+import Robit from '@@/Robit';
 import SearchGoods from '@@/SearchGoods';
 import Form from '@@/Form';
 import './App.scss';
@@ -27,16 +28,11 @@ class App extends Component {
                     <Route path="/search" component={SearchGoods} />
                     <Route path="/search/:title" component={SearchGoods} />
                     <Route path="/goods/:id" component={Goods} />
-<<<<<<< HEAD
-                    <Route path="/order/:id" component={Order} />
-                    <Route path="/form/:id" component={Form} />
-                    <Route path="/NotFound" render={() => <div><h1 style={{ textAlign: 'center' }}>404</h1></div>} /> */}
-=======
                     <Route path="/robit" component={Robit} />
+                    <Route path="/form/:id" component={Form} />
                     <Route path="/order/:id" component={Order} />
                     <Route path="/mine" component={Mine} />
                     <Route path="/NotFound" render={() => <div><h1 style={{ textAlign: 'center' }}>404</h1></div>} />
->>>>>>> a145269dd75ed173beb1f39a03577a427d2daede
                     <Redirect from="/" to="/home" exact />
                     <Redirect from="*" to="/NotFound" />
 
