@@ -30,13 +30,13 @@ Router.post('/sort', async (req, res) => {
 // 模糊查询
 Router.get('/search', async (req, res) => {
 
-    let {title} = req.query;
+    let { title } = req.query;
     let result
     try {
         result = await mongo.search(colName, title);
-        if(result.length > 0){
+        if (result.length > 0) {
             result;
-        }else {
+        } else {
             result = formatData({
                 code: "0"
             })
@@ -54,7 +54,7 @@ Router.get('/search', async (req, res) => {
 Router.get('/', async (req, res) => {
     let result
     try {
-        result = await mongo.find(colName, req.query);
+        result = await mongo.find(colName, req.query, null);
     } catch (err) {
         result = formatData({
             code: "0"
@@ -109,24 +109,24 @@ Router.get('/getid', async (req, res) => {
 // 添加商品
 Router.post('/add', async (req, res) => {
     let {
-        id,
-        categoryName,
-        productName,
-        barcode,
-        picUrl,
-        efficacy,
-        guidePrice
+        gid,
+        title,
+        tag,
+        pro_tags,
+        imgurl,
+        price,
+        pro_tags1
     } = req.body;
     let result;
     try {
-        await mongodb.create(colName, [{
-            id,
-            categoryName,
-            productName,
-            barcode,
-            picUrl,
-            efficacy,
-            guidePrice
+        await mongo.create(colName, [{
+            gid,
+            title,
+            tag,
+            pro_tags,
+            imgurl,
+            price,
+            pro_tags1
         }]);
         result = formatData();
     } catch (err) {
@@ -138,32 +138,32 @@ Router.post('/add', async (req, res) => {
 });
 
 // // 删除单个商品
-Router.delete("/dele", async (req, res) => {
-    // console.log('barcode',req.query)
-    let {
-        barcode
-    } = req.query;
+Router.get('/remove', async (req, res) => {
+    let { gid } = req.query;
+	console.log('gid',gid)
     let result;
     try {
-        result = await mongodb.remove(colName, {
-            barcode: parseInt(barcode)
-        })
-        result = formatData()
+        result = await mongo.remove(colName, gid , null);
+      
+            result = formatData()
+        
     } catch {
         result = formatData({
             code: "0"
         })
-    }
-    res.send(result);
+    } res.send(result);
 })
+
 
 // // 修改商品.
 Router.patch('/change', async (req, res) => {
-    let id = req.query.barcode * 1;
-    req.query.barcode = id;
-    let result = await mongodb.update(colName,req.query,req.body
+    console.log('query',req.query)
+    console.log('body',req.body)
+    // let gid  = req.query;
+    // console.log('gid',gid)
+    let result = await mongo.update(colName, req.query, req.body
     );
-    res.send(result);    
+    res.send(result);
 });
 
 module.exports = Router;
