@@ -288,7 +288,7 @@ class Home extends Component {
                         }}
                     >
                         {
-                            menu.map(item => <Menu.Item key={item.name}
+                            menu.map((item, key) => <Menu.Item key={item.name}
                                 onClick={this.tab.bind(this, item.goodsTag)}
                                 style={{ width: '33.3%', height: 50, textAlign: "center" }}>
                                 {item.text}
@@ -298,7 +298,7 @@ class Home extends Component {
                     </Menu >
                     <div>
                         {
-                            home_goods.map(item => {
+                            home_goods.map((item, key) => {
                                 return <div className="home_item" key={item.gid} onClick={this.goto_goods.bind(this, item.gid)}>
                                     <h4>
                                         <span>{item.tag}</span> |

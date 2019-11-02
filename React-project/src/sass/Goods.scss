@@ -1,21 +1,23 @@
 .Goods_content {
-    height: auto;
     width: 100%;
-    position: relative;
     background: rgb(219, 218, 218);
+    height: auto;
 
     .Goods_Header {
+        position: fixed;
+        z-index: 2222;
         width: 100%;
         height: 44px;
         top: 0;
         left: 0;
-        z-index: 9;
+
         padding: 0 14px;
         background: #fff;
         box-shadow: 0 0 2px rgba(0, 0, 0, .1);
         display: flex;
         justify-content: space-between;
         align-items: center;
+
 
         a {
             height: 44px;
@@ -257,11 +259,28 @@
     }
 
     .Goods_Footer {
-        width: 100%;
-        height: 44px;
-        background: #f35b5b;
         position: fixed;
         bottom: 0;
+        display: flex;
+        width: 100%;
+        height: 44px;
+        background: #fff;
+        z-index: 1000;
+
+        span {
+            width: 120px;
+            height: 50px;
+            font-size: 16px;
+            text-align: center;
+            border-right: 1px solid #ccc;
+        }
+
+        .like_order {
+            line-height: 50px;
+            text-align: center;
+            width: 150px;
+            background: #f50;
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import Mine from '@@/Mine';
 import Order from '@@/Order';
 import Robit from '@@/Robit';
 import SearchGoods from '@@/SearchGoods';
+import Form from '@@/Form';
 import './App.scss';
 
 // @withRouter
@@ -28,6 +29,7 @@ class App extends Component {
                     <Route path="/search/:title" component={SearchGoods} />
                     <Route path="/goods/:id" component={Goods} />
                     <Route path="/robit" component={Robit} />
+                    <Route path="/form/:id" component={Form} />
                     <Route path="/order/:id" component={Order} />
                     <Route path="/mine" component={Mine} />
                     <Route path="/NotFound" render={() => <div><h1 style={{ textAlign: 'center' }}>404</h1></div>} />
