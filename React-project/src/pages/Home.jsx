@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button,Badge } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button, Badge } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -69,7 +69,7 @@ class Home extends Component {
     // 模糊查询
     goto_search = async () => {
         let { history } = this.props;
-        history.push('/search' )
+        history.push('/search')
     }
 
     // 出现联系方式和关闭1
@@ -90,7 +90,7 @@ class Home extends Component {
         history.push('/robit');
     }
 
-    goto_mine(){
+    goto_mine() {
         let { history } = this.props;
         history.push('/mine');
     }
@@ -155,7 +155,7 @@ class Home extends Component {
                             closable={true}
                             onClose={this.onClose}
                             visible={this.state.visible}
-                            style={{display:'block'}}
+                            style={{ display: 'block' }}
                         >
                             <p style={{
                                 height: 40,
@@ -175,13 +175,13 @@ class Home extends Component {
                                 border: '1px solid #ccc'
                             }}
                                 onClick={this.goto_robit.bind(this)}
-                            ><Icon type="wechat" style={{ color: 'green' }} onClick={this.goto_robit.bind(this)}/> 在线客服</p>
+                            ><Icon type="wechat" style={{ color: 'green' }} onClick={this.goto_robit.bind(this)} /> 在线客服</p>
                         </Drawer>
                     </Col>
                     <Col span={2}>
                         {
                             user ? <Badge dot>
-                                <Icon type="user" style={{ fontSize: 25 }}  onClick={this.goto_mine.bind(this)}/>
+                                <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_mine.bind(this)} />
                             </Badge> : <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_login.bind(this)} />
 
                         }
@@ -190,38 +190,44 @@ class Home extends Component {
                 </Row>
                 <div className="lunbo">
                     <Carousel autoplay>
-                        {
+                        {/* {
                             lunbo.map(item => <img src={item.imageUrl} key={item.xuhao} />)
-                        }
+                        } */}
+                        <img src={require('../images/shouye/lunbo/lunbo1.jpg')} />
+                        <img src={require('../images/shouye/lunbo/lunbo2.jpg')} />
+                        <img src={require('../images/shouye/lunbo/lunbo3.jpg')} />
+                        <img src={require('../images/shouye/lunbo/lunbo4.jpg')} />
+                        <img src={require('../images/shouye/lunbo/lunbo5.jpg')} />
+                        
                     </Carousel>
                     <ul className="fenlei">
                         <li onClick={this.goto_list.bind(this)}>
                             <i>
-                                <img src="../images/shouye/fenlei/zhoubian.png" />
+                                <img src={require("../images/shouye/fenlei/zhoubian.png")} />
                             </i>
                             <span>周边游</span>
                         </li>
                         <li onClick={this.goto_list.bind(this)}>
                             <i>
-                                <img src="../images/shouye/fenlei/guonei.png" />
+                                <img src={require("../images/shouye/fenlei/guonei.png")} />
                             </i>
                             <span>国内游</span>
                         </li>
                         <li onClick={this.goto_list.bind(this)}>
                             <i>
-                                <img src="../images/shouye/fenlei/chujing.png" />
+                                <img src={require("../images/shouye/fenlei/chujing.png")} />
                             </i>
                             <span>出境游</span>
                         </li>
                         <li>
                             <i>
-                                <img src="../images/shouye/fenlei/dandiyou.png" />
+                                <img src={require("../images/shouye/fenlei/dandiyou.png")} />
                             </i>
                             <span>当地玩乐</span>
                         </li>
                         <li>
                             <i>
-                                <img src="../images/shouye/fenlei/qianzheng.png" />
+                                <img src={require("../images/shouye/fenlei/qianzheng.png")} />
                             </i>
                             <span>签证</span>
                         </li>
@@ -243,29 +249,29 @@ class Home extends Component {
                     <h2>热门目的地</h2>
                     <Row>
                         <Col span={7}>
-                            <img src="../images/shouye/mudidi/balidao.jpg" />
+                            <img src={require("../images/shouye/mudidi/balidao.jpg")} />
                             <p>巴厘岛</p>
                         </Col>
                         <Col span={7}>
-                            <img src="../images/shouye/mudidi/riben.jpg" />
+                            <img src={require("../images/shouye/mudidi/riben.jpg")} />
                             <p>日本</p>
                         </Col>
                         <Col span={7}>
-                            <img src="../images/shouye/mudidi/pujidao.jpg" />
+                            <img src={require("../images/shouye/mudidi/pujidao.jpg")} />
                             <p>普吉岛</p>
                         </Col>
                     </Row>
                     <Row>
                         <Col span={7}>
-                            <img src="../images/shouye/mudidi/haerbin.png" />
+                            <img src={require("../images/shouye/mudidi/haerbin.png")} />
                             <p>哈尔滨</p>
                         </Col>
                         <Col span={7}>
-                            <img src="../images/shouye/mudidi/yunnan.jpg" />
+                            <img src={require("../images/shouye/mudidi/yunnan.jpg")} />
                             <p>云南</p>
                         </Col>
                         <Col span={7}>
-                            <img src="../images/shouye/mudidi/beijing.jpg" />
+                            <img src={require("../images/shouye/mudidi/beijing.jpg")} />
                             <p>北京</p>
                         </Col>
                     </Row>
