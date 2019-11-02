@@ -150,7 +150,7 @@ class Goods extends Component {
 
                             {/* 详细行程 */}
                             <div>
-                                <h3 class="intro-title">详细行程</h3>
+                                <h3 className="intro-title">详细行程</h3>
                             </div>
                         </div>
                     </div>

@@ -38,6 +38,7 @@ class SearchGoods extends Component {
         this.setState({
             search_list: data
         })
+        this.searchDOM.focus();
     }
 
     render() {
@@ -56,7 +57,7 @@ class SearchGoods extends Component {
                             placeholder={params.title}
                             style={{ width: "100%", height: 40 }}
                             onSearch={this.search_goods.bind(this)}
-                            
+                            ref={el => { this.searchDOM = el }}
                         />
                     </div>
                 </header>
