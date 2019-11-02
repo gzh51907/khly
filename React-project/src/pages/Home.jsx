@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Badge } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button,Badge } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -9,6 +9,7 @@ import Api from '@/Api';
 class Home extends Component {
     state = {
         selected: '出境推荐',
+        visible: false,
         menu: [{
             goodsTag: '自由行',
             name: '出境推荐',
@@ -50,7 +51,7 @@ class Home extends Component {
         user: ""
     }
     // 跳转list
-    goto_guonei = async () => {
+    goto_list = async () => {
         let { history } = this.props;
         history.push('/list')
     }
@@ -66,9 +67,32 @@ class Home extends Component {
     }
 
     // 模糊查询
-    goto_search = async (val) => {
+    goto_search = async () => {
         let { history } = this.props;
-        history.push('/search/' + val)
+        history.push('/search' )
+    }
+
+    // 出现联系方式和关闭1
+    showDrawer = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    goto_robit = () => {
+        let { history } = this.props;
+        history.push('/robit');
+    }
+
+    goto_mine(){
+        let { history } = this.props;
+        history.push('/mine');
     }
 
     tab = async (tag) => {
@@ -98,7 +122,6 @@ class Home extends Component {
 
     render() {
         let { selected, menu, lunbo, home_goods, user } = this.state;
-        console.log('user', user)
 
         return (
             <div style={{ backgroundColor: '#f1f1f1' }}>
@@ -107,21 +130,63 @@ class Home extends Component {
                         <a className="ant-dropdown-link" href="#">
                             广州 <Icon type="down" />
                         </a>
-
                     </Col>
                     <Col span={16}>
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
+<<<<<<< HEAD
                         // value
                         // onSearch={this.goto_search.bind(this)}
+=======
+                            onClick={this.goto_search.bind(this)}
+>>>>>>> a145269dd75ed173beb1f39a03577a427d2daede
                         />
                     </Col>
-                    <Col span={2}><Icon type="phone" /></Col>
+                    <Col span={2}>
+                        <Button type="primary"
+                            onClick={this.showDrawer}
+                            style={{
+                                width: '100%', padding: 0, backgroundColor: '#01af63',
+                                border: 'none', boxShadow: 'none'
+                            }}
+                        >
+                            <Icon type="phone" style={{ fontSize: 25 }} />
+                        </Button>
+                        <Drawer
+                            title="联系我们"
+                            placement="bottom"
+                            height="auto"
+                            closable={true}
+                            onClose={this.onClose}
+                            visible={this.state.visible}
+                            style={{display:'block'}}
+                        >
+                            <p style={{
+                                height: 40,
+                                lineHeight: 3,
+                                fontSize: 14,
+                                marginBottom: 10,
+                                textAlign: 'center',
+                                border: '1px solid green'
+                            }}> <Icon type="phone" />  客服电话：166-3232-4232</p>
+                            <p style={{
+                                height: 40,
+                                lineHeight: 3,
+                                fontSize: 14,
+                                marginBottom: 10,
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                border: '1px solid #ccc'
+                            }}
+                                onClick={this.goto_robit.bind(this)}
+                            ><Icon type="wechat" style={{ color: 'green' }} onClick={this.goto_robit.bind(this)}/> 在线客服</p>
+                        </Drawer>
+                    </Col>
                     <Col span={2}>
                         {
                             user ? <Badge dot>
-                                <Icon type="user" style={{ fontSize: 25 }} />
+                                <Icon type="user" style={{ fontSize: 25 }}  onClick={this.goto_mine.bind(this)}/>
                             </Badge> : <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_login.bind(this)} />
 
                         }
@@ -135,19 +200,19 @@ class Home extends Component {
                         }
                     </Carousel>
                     <ul className="fenlei">
-                        <li>
+                        <li onClick={this.goto_list.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/zhoubian.png" />
                             </i>
                             <span>周边游</span>
                         </li>
-                        <li onClick={this.goto_guonei.bind(this)}>
+                        <li onClick={this.goto_list.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/guonei.png" />
                             </i>
                             <span>国内游</span>
                         </li>
-                        <li>
+                        <li onClick={this.goto_list.bind(this)}>
                             <i>
                                 <img src="../images/shouye/fenlei/chujing.png" />
                             </i>
@@ -252,9 +317,8 @@ class Home extends Component {
                         }
                     </div>
                 </div>
-
                 <BackTop visibilityHeight="400" />
-            </div>
+            </div >
         )
     }
 }

@@ -57,8 +57,20 @@ async function search(colName, query = {}) {
     client.close();
     return result;
 }
+
+// id查询
+async function getid(colName, query = {}) {
+	console.log("id查询",typeof(query))
+    let { db, client } = await connect();
+    let col = db.collection(colName);
+	query = parseInt(query)
+    let result = await col.find({"gid":query}).toArray();
+    client.close();
+    return result;
+}
+
 // 删除
-async function remove(colName, query={}) {
+async function remove(colName, query= {}) {
     let {
         db,
         client
@@ -74,5 +86,6 @@ module.exports = {
     create,
     find,
     search,
-    remove
+	remove,
+	getid
 }

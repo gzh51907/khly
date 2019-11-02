@@ -24,9 +24,11 @@
         color: #fff;
         line-height: 40px;
         font-size: 25px;
+
+        .ant-drawer-wrapper-body{
+            display: none;
+        }
     }
-
-
 }
 
 .lunbo {
@@ -187,8 +189,8 @@
             overflow: hidden;
             display: -webkit-box;
             text-overflow: ellipsis;
-            -webkit-box-orient:vertical;
-            -webkit-line-clamp:1;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
         }
 
     }

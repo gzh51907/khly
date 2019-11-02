@@ -5,9 +5,10 @@ import AddUser from '@@/AddUser';
 import AddGoods from '@@/AddGoods';
 import Goods from '@@/Goods';
 import User from '@@/User';
+import Admin from '@@/Admin';
+
 import './App.scss';
 import { Layout, Menu, Breadcrumb, Icon, Col, Row } from 'antd';
-
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 // @withRouter
@@ -15,8 +16,12 @@ class App extends Component {
     state = {
         collapsed: false,
         Primary: '',
-        SubTitle: ''
+        SubTitle: '',
     };
+    out() {
+        localStorage.removeItem("admin");
+        location.reload();
+    }
     componentWillMount() {
         let user = localStorage.getItem("adminurl");
         if (user) {
@@ -58,7 +63,10 @@ class App extends Component {
             let url = history.location.pathname;
             localStorage.setItem('adminurl', JSON.stringify(url));
         })
+        let admin = localStorage.getItem("username");
+
     }
+
     onCollapse = collapsed => {
         this.setState({ collapsed });
     };
@@ -90,92 +98,102 @@ class App extends Component {
         let { history } = this.props;
         history.push('/adduser');
         this.setState({
-            Primary: '用户管理',
+            Primary: '用户管理', 
             SubTitle: '添加用户',
         })
     }
     render() {
+
         return (
-            <Layout style={{ minHeight: '100vh' }}>
-                <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                    <div className="logo" style={{ width: "100px", height: "64px" }}>
+            <div>
+                {
+                    JSON.parse(localStorage.getItem("admin")) ?
+                        <div className="content">
+                            <Layout style={{ minHeight: '100vh' }}>
+                                <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+                                    <div className="logo" style={{ width: "200px", height: "64px",color:"#fff",lineHeight:"64px",fontSize:"16px",paddingLeft:"30px"}}>
+                                       <p>康辉旅游网管理系统</p>
+                                    </div>
+                                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                                        <SubMenu
+                                            key="sub1"
+                                            title={
+                                                <span>
+                                                    <Icon type="shop" />
+                                                    <span>商品管理</span>
+                                                </span>
+                                            }
+                                        >
+                                            <Menu.Item key="6" onClick={this.GoGoods.bind(this)}><Icon type="shopping" />商品信息</Menu.Item>
+                                            <Menu.Item key="8" onClick={this.GoAddGoods.bind(this)}><Icon type="skin" />添加商品</Menu.Item>
+                                        </SubMenu>
+                                        <SubMenu
+                                            key="sub2"
+                                            title={
+                                                <span>
+                                                    <Icon type="user" />
+                                                    <span>用户管理</span>
+                                                </span>
+                                            }
+                                        >
+                                            <Menu.Item key="3" onClick={this.GoUser.bind(this)}><Icon type="team" />用户信息</Menu.Item>
+                                            <Menu.Item key="4" onClick={this.GoAddUser.bind(this)}><Icon type="user-add" />添加用户</Menu.Item>
 
-                    </div>
-                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                        <SubMenu
-                            key="sub1"
-                            title={
-                                <span>
-                                    <Icon type="shop" />
-                                    <span>商品管理</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="6" onClick={this.GoGoods.bind(this)}><Icon type="shopping" />商品信息</Menu.Item>
-                            <Menu.Item key="8" onClick={this.GoAddGoods.bind(this)}><Icon type="skin" />添加商品</Menu.Item>
-                        </SubMenu>
-                        <SubMenu
-                            key="sub2"
-                            title={
-                                <span>
-                                    <Icon type="user" />
-                                    <span>用户管理</span>
-                                </span>
-                            }
-                        >
-                            <Menu.Item key="3" onClick={this.GoUser.bind(this)}><Icon type="team" />用户信息</Menu.Item>
-                            <Menu.Item key="4" onClick={this.GoAddUser.bind(this)}><Icon type="user-add" />添加用户</Menu.Item>
-
-                        </SubMenu>
+                                        </SubMenu>
 
 
-                    </Menu>
-                </Sider>
-                <Layout>
-                    <Header style={{ background: '#001529', padding: 0 }} >
-                        <Row>
-                            <Col span={20}></Col>
-                            <Col span={4}>
-                                <Menu
-                                    theme="dark"
-                                    mode="horizontal"
-                                    defaultSelectedKeys={['2']}
-                                    style={{ lineHeight: '64px' }}
-                                >
-                                    <Menu.Item key="1">用户名：admin</Menu.Item>
-                                    <Menu.Item key="2">退出</Menu.Item>
-                                </Menu>
-                            </Col>
-                        </Row>
+                                    </Menu>
+                                </Sider>
+                                <Layout>
+                                    <Header style={{ background: '#001529', padding: 0 }} >
+                                        <Row>
+                                            <Col span={20}></Col>
+                                            <Col span={4}>
+                                                <Menu
+                                                    theme="dark"
+                                                    mode="horizontal"
+                                                    defaultSelectedKeys={['2']}
+                                                    style={{ lineHeight: '64px' }}
+                                                >
+                                                    <Menu.Item key="1">用户名：admin</Menu.Item>
+                                                    <Menu.Item key="2" onClick={this.out.bind(this)}>退出</Menu.Item>
+                                                </Menu>
+                                            </Col>
+                                        </Row>
 
-                    </Header>
-                    <Content style={{ margin: '0 16px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>
-                                {
-                                    this.state.Primary
-                                }
-                            </Breadcrumb.Item>
-                            <Breadcrumb.Item>{this.state.SubTitle}</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                            <>
-                                <Switch>
-                                    <Route path="/adduser" component={AddUser} />
-                                    <Route path="/addgoods" component={AddGoods} />
-                                    <Route path="/user" component={User} />
-                                    <Route path="/goods" component={Goods} />
-                                    <Route path="/NotFound" render={() => <div><h1 style={{ textAlign: 'center' }}>404</h1></div>} />
-                                    <Redirect from="/" to="/goods" exact />
-                                    <Redirect from="*" to="/NotFound" />
-                                </Switch>
-                            </>
+                                    </Header>
+                                    <Content style={{ margin: '0 16px' }}>
+                                        <Breadcrumb style={{ margin: '16px 0' }}>
+                                            <Breadcrumb.Item>
+                                                {
+                                                    this.state.Primary
+                                                }
+                                            </Breadcrumb.Item>
+                                            <Breadcrumb.Item>{this.state.SubTitle}</Breadcrumb.Item>
+                                        </Breadcrumb>
+                                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                                            <>
+                                                <Switch>
+                                                    <Route path="/adduser" component={AddUser} />
+                                                    <Route path="/addgoods" component={AddGoods} />
+                                                    <Route path="/user" component={User} />
+                                                    <Route path="/goods" component={Goods} />
+                                                    <Route path="/NotFound" render={() => <div><h1 style={{ textAlign: 'center' }}>404</h1></div>} />
+                                                    <Redirect from="/" to="/goods" exact />
+                                                    <Redirect from="*" to="/NotFound" />
+                                                </Switch>
+                                            </>
+                                        </div>
+                                    </Content>
+                                    <Footer style={{ textAlign: 'center' }}>【康辉旅游网】康辉旅行社_出境旅游|国内旅游线路推荐_签证办理_酒店|机票预定 ©2018 </Footer>
+                                </Layout>
+                            </Layout>
                         </div>
-                    </Content>
-                    <Footer style={{ textAlign: 'center' }}>【康辉旅游网】康辉旅行社_出境旅游|国内旅游线路推荐_签证办理_酒店|机票预定 ©2018 </Footer>
-                </Layout>
-            </Layout>
-
+                        : <div className="admin" >
+                            <Admin></Admin>
+                        </div>
+                }
+            </div>
         )
     }
 }
