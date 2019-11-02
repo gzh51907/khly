@@ -105,7 +105,7 @@ class List extends Component {
 
     // onChange = e => {
     //     this.setState({
-    //         placement: e.target.value,
+    //         placement: e.target.value,!!!
     //     });
     // };
     async componentDidMount() {
