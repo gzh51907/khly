@@ -149,6 +149,7 @@ class List extends Component {
                             <Menu.Item
                                 onClick={this.goto.bind(this, item.text)}
                                 key={item.text}
+                                className="list_li"
                             >
                                 {item.text}
                             </Menu.Item>
@@ -231,6 +232,7 @@ class List extends Component {
                             closable={false}
                             onClose={this.onClose}
                             visible={this.state.visible2}
+                            className="chouti"
                         >
                             <Menu style={{ width: '100%' }}>
                                 {
