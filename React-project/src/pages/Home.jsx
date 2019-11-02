@@ -67,9 +67,9 @@ class Home extends Component {
     }
 
     // 模糊查询
-    goto_search = async (val) => {
-            let { history } = this.props;
-            history.push('/search/' + val)
+    goto_search = async () => {
+        let { history } = this.props;
+        history.push('/search' )
     }
 
     // 出现联系方式和关闭1
@@ -135,7 +135,7 @@ class Home extends Component {
                         <Search
                             placeholder="input search text"
                             style={{ width: "95%", height: 35 }}
-                            onSearch={this.goto_search.bind(this)}
+                            onClick={this.goto_search.bind(this)}
                         />
                     </Col>
                     <Col span={2}>

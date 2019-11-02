@@ -123,7 +123,7 @@ class List extends Component {
         return (
             <>
                 <header className="Header_List">
-                    <a href="###"><span>
+                    <a href="#home"><span>
                         <Icon type="home" className="List_icon" />
                     </span>
                     </a>

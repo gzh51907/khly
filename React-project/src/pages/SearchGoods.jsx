@@ -56,6 +56,7 @@ class SearchGoods extends Component {
                             placeholder={params.title}
                             style={{ width: "100%", height: 40 }}
                             onSearch={this.search_goods.bind(this)}
+                            
                         />
                     </div>
                 </header>
