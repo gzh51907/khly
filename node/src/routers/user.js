@@ -8,7 +8,6 @@ const {mongo} =require('../db');
 // 数据库表名
 const colName = 'user';
 const admin = 'admin';
-
 // 注册用户 1注册成功 0注册失败
 Router.post('/reg',async (req,res)=>{
     let{username,password}=req.body;
@@ -35,7 +34,7 @@ Router.post('/check',async (req,res)=>{
     }
 })
 // 查询所有用户
-Router.get('/', async (req, res) => {
+Router.post('/', async (req, res) => {
     let result
     try {
         result = await mongo.find(colName, req.query, null);
@@ -49,7 +48,7 @@ Router.get('/', async (req, res) => {
 // 登录用户  1登录成功 0登录失败
 Router.post('/login',async (req,res)=>{
     let{username,password}=req.body;
-    console.log("body",username,password)
+    //console.log("body",username,password)
     let result = await mongo.find(colName,{username,password},null);
     if (result.length) {
         Authorization = token.create(username);
@@ -67,7 +66,7 @@ Router.post("/dele", async (req, res) => {
     let {
         username
     } = req.body;
-    // console.log("后台接收",username)
+   // console.log("后台接收",username)
     let result;
     try {
         result = await mongo.remove(colName, {

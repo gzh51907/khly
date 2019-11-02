@@ -64,6 +64,8 @@ Router.get('/', async (req, res) => {
     // console.log(result)
 })
 
+
+
 // 查询单个商品
 Router.get('/getgoods', async (req, res) => {
     let { tag } = req.query;
@@ -84,7 +86,6 @@ Router.get('/getgoods', async (req, res) => {
     }
     res.send(result);
 })
-
 // gid查询单个商品
 Router.get('/getid', async (req, res) => {
     let { gid } = req.query;
@@ -105,7 +106,7 @@ Router.get('/getid', async (req, res) => {
         })
     } res.send(result);
 })
-    
+
 // 添加商品
 Router.post('/add', async (req, res) => {
     let {
