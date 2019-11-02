@@ -85,7 +85,27 @@ Router.get('/getgoods', async (req, res) => {
     res.send(result);
 })
 
-
+// gid查询单个商品
+Router.get('/getid', async (req, res) => {
+    let { gid } = req.query;
+	console.log(gid)
+    let result;
+    try {
+        result = await mongo.getid(colName, gid , null);
+        if (result.length > 0) {
+            result;
+        } else {
+            result = formatData({
+                code: "0"
+            })
+        }
+    } catch {
+        result = formatData({
+            code: "0"
+        })
+    } res.send(result);
+})
+    
 // 添加商品
 Router.post('/add', async (req, res) => {
     let {

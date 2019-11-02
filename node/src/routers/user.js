@@ -7,6 +7,7 @@ const {mongo} =require('../db');
 
 // 数据库表名
 const colName = 'user';
+const admin = 'admin';
 
 // 注册用户 1注册成功 0注册失败
 Router.post('/reg',async (req,res)=>{
@@ -79,5 +80,21 @@ Router.post("/dele", async (req, res) => {
         })
     }
     res.send(result);
+})
+// 后台页面登录用户  1登录成功 0登录失败
+Router.post('/admin',async (req,res)=>{
+    let{username,password}=req.body;
+    console.log("body",username,password)
+    let result = await mongo.find(admin,{username,password},null);
+    if (result.length) {
+        Authorization = token.create(username);
+        res.send(formatData({
+            data: Authorization
+        }));
+    } else {
+        res.send(formatData({
+            code: 0
+        }))
+    }
 })
 module.exports=Router;
