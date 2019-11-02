@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button } from 'antd';
+import { Carousel, Row, Col, Input, Icon, Menu, BackTop, Drawer, Button,Badge } from 'antd';
 import '@/sass/home.scss';
 const { Search } = Input;
 
@@ -47,7 +47,8 @@ class Home extends Component {
             imageUrl: '../images/shouye/lunbo/lunbo5.jpg'
         }],
         home_goods: [],
-        current: '自由行'
+        current: '自由行',
+        user: ""
     }
     // 跳转list
     goto_guonei = async () => {
@@ -67,8 +68,8 @@ class Home extends Component {
 
     // 模糊查询
     goto_search = async (val) => {
-        let { history } = this.props;
-        history.push('/search/' + val)
+            let { history } = this.props;
+            history.push('/search/' + val)
     }
 
     // 出现联系方式和关闭
@@ -84,7 +85,7 @@ class Home extends Component {
         });
     };
 
-    goto_robit = ()=>{
+    goto_robit = () => {
 
     }
 
@@ -96,18 +97,25 @@ class Home extends Component {
             home_goods: data,
         })
     }
+
     async componentDidMount() {
-        let { current, home_goods } = this.state;
+        let { current } = this.state;
         let data = await Api.get('goods/getgoods', {
             tag: current
         })
         this.setState({
             home_goods: data
         })
+
+        // 判断是否登录
+        let user = localStorage.getItem('username');
+        this.setState({
+            user: user
+        })
     }
 
     render() {
-        let { selected, menu, lunbo, home_goods } = this.state;
+        let { selected, menu, lunbo, home_goods, user } = this.state;
 
         return (
             <div style={{ backgroundColor: '#f1f1f1' }}>
@@ -143,152 +151,160 @@ class Home extends Component {
                             visible={this.state.visible}
                         >
                             <p style={{
-                                height:40,
-                                lineHeight:3,
+                                height: 40,
+                                lineHeight: 3,
                                 fontSize: 14,
                                 marginBottom: 10,
                                 textAlign: 'center',
-                                border:'1px solid green'
+                                border: '1px solid green'
                             }}> <Icon type="phone" />  客服电话：166-3232-4232</p>
-                            <p  style={{
-                               height:40,
-                               lineHeight:3,
+                            <p style={{
+                                height: 40,
+                                lineHeight: 3,
                                 fontSize: 14,
                                 marginBottom: 10,
                                 textAlign: 'center',
                                 cursor: 'pointer',
-                                border:'1px solid #ccc'
+                                border: '1px solid #ccc'
                             }}
-                            onClick={this.goto_robit.bind(this)}
-                            ><Icon type="wechat" style={{ color: 'green'}}/> 在线客服</p>
+                                onClick={this.goto_robit.bind(this)}
+                            ><Icon type="wechat" style={{ color: 'green' }} /> 在线客服</p>
                         </Drawer>
                     </Col>
-                <Col span={2}><Icon type="user" onClick={this.goto_login.bind(this)} /></Col>
-                </Row>
-            <div className="lunbo">
-                <Carousel autoplay>
-                    {
-                        lunbo.map(item => <img src={item.imageUrl} key={item.xuhao} />)
-                    }
-                </Carousel>
-                <ul className="fenlei">
-                    <li>
-                        <i>
-                            <img src="../images/shouye/fenlei/zhoubian.png" />
-                        </i>
-                        <span>周边游</span>
-                    </li>
-                    <li onClick={this.goto_guonei.bind(this)}>
-                        <i>
-                            <img src="../images/shouye/fenlei/guonei.png" />
-                        </i>
-                        <span>国内游</span>
-                    </li>
-                    <li>
-                        <i>
-                            <img src="../images/shouye/fenlei/chujing.png" />
-                        </i>
-                        <span>出境游</span>
-                    </li>
-                    <li>
-                        <i>
-                            <img src="../images/shouye/fenlei/dandiyou.png" />
-                        </i>
-                        <span>当地玩乐</span>
-                    </li>
-                    <li>
-                        <i>
-                            <img src="../images/shouye/fenlei/qianzheng.png" />
-                        </i>
-                        <span>签证</span>
-                    </li>
-                </ul>
-            </div>
-            <div className="part_two">
-                <Row>
-                    <Col span={12} style={{ borderRight: '1px solid #ccc' }}>
-                        <Icon type="edit" />
-                        <span>康辉定制游</span>
-                    </Col>
-                    <Col span={12}>
-                        <Icon type="gitlab" />
-                        <span>企业客户定制</span>
-                    </Col>
-                </Row>
-            </div>
-            <div className="mudidi">
-                <h2>热门目的地</h2>
-                <Row>
-                    <Col span={7}>
-                        <img src="../images/shouye/mudidi/balidao.jpg" />
-                        <p>巴厘岛</p>
-                    </Col>
-                    <Col span={7}>
-                        <img src="../images/shouye/mudidi/riben.jpg" />
-                        <p>日本</p>
-                    </Col>
-                    <Col span={7}>
-                        <img src="../images/shouye/mudidi/pujidao.jpg" />
-                        <p>普吉岛</p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={7}>
-                        <img src="../images/shouye/mudidi/haerbin.png" />
-                        <p>哈尔滨</p>
-                    </Col>
-                    <Col span={7}>
-                        <img src="../images/shouye/mudidi/yunnan.jpg" />
-                        <p>云南</p>
-                    </Col>
-                    <Col span={7}>
-                        <img src="../images/shouye/mudidi/beijing.jpg" />
-                        <p>北京</p>
-                    </Col>
-                </Row>
-            </div>
+                    <Col span={2}>
+                        {
+                            user ? <Badge dot>
+                                <Icon type="user" style={{ fontSize: 25 }} />
+                            </Badge> : <Icon type="user" style={{ fontSize: 25 }} onClick={this.goto_login.bind(this)} />
 
-                {/* 商品 */ }
-            <div className="good">
-            <Menu mode="horizontal"
-                selectedKeys={selected}
-                onSelect={({ key }) => {
-                    this.setState({
-                        selected: [key]
-                    })
-                }}
-            >
-                {
-                    menu.map(item => <Menu.Item key={item.name}
-                        onClick={this.tab.bind(this, item.goodsTag)}
-                        style={{ width: '33.3%', height: 50, textAlign: "center" }}>
-                        {item.text}
-                    </Menu.Item>)
-                }
+                        }
 
-            </Menu >
-            <div>
-                {
-                    home_goods.map(item => {
-                        return <div className="home_item" key={item.gid} onClick={this.goto_goods.bind(this, item.gid)}>
-                            <h4>
-                                <span>{item.tag}</span> |
+                    </Col>
+                </Row>
+                <div className="lunbo">
+                    <Carousel autoplay>
+                        {
+                            lunbo.map(item => <img src={item.imageUrl} key={item.xuhao} />)
+                        }
+                    </Carousel>
+                    <ul className="fenlei">
+                        <li>
+                            <i>
+                                <img src="../images/shouye/fenlei/zhoubian.png" />
+                            </i>
+                            <span>周边游</span>
+                        </li>
+                        <li onClick={this.goto_guonei.bind(this)}>
+                            <i>
+                                <img src="../images/shouye/fenlei/guonei.png" />
+                            </i>
+                            <span>国内游</span>
+                        </li>
+                        <li>
+                            <i>
+                                <img src="../images/shouye/fenlei/chujing.png" />
+                            </i>
+                            <span>出境游</span>
+                        </li>
+                        <li>
+                            <i>
+                                <img src="../images/shouye/fenlei/dandiyou.png" />
+                            </i>
+                            <span>当地玩乐</span>
+                        </li>
+                        <li>
+                            <i>
+                                <img src="../images/shouye/fenlei/qianzheng.png" />
+                            </i>
+                            <span>签证</span>
+                        </li>
+                    </ul>
+                </div>
+                <div className="part_two">
+                    <Row>
+                        <Col span={12} style={{ borderRight: '1px solid #ccc' }}>
+                            <Icon type="edit" />
+                            <span>康辉定制游</span>
+                        </Col>
+                        <Col span={12}>
+                            <Icon type="gitlab" />
+                            <span>企业客户定制</span>
+                        </Col>
+                    </Row>
+                </div>
+                <div className="mudidi">
+                    <h2>热门目的地</h2>
+                    <Row>
+                        <Col span={7}>
+                            <img src="../images/shouye/mudidi/balidao.jpg" />
+                            <p>巴厘岛</p>
+                        </Col>
+                        <Col span={7}>
+                            <img src="../images/shouye/mudidi/riben.jpg" />
+                            <p>日本</p>
+                        </Col>
+                        <Col span={7}>
+                            <img src="../images/shouye/mudidi/pujidao.jpg" />
+                            <p>普吉岛</p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={7}>
+                            <img src="../images/shouye/mudidi/haerbin.png" />
+                            <p>哈尔滨</p>
+                        </Col>
+                        <Col span={7}>
+                            <img src="../images/shouye/mudidi/yunnan.jpg" />
+                            <p>云南</p>
+                        </Col>
+                        <Col span={7}>
+                            <img src="../images/shouye/mudidi/beijing.jpg" />
+                            <p>北京</p>
+                        </Col>
+                    </Row>
+                </div>
+
+                {/* 商品 */}
+                <div className="good">
+                    <Menu mode="horizontal"
+                        selectedKeys={selected}
+                        onSelect={({ key }) => {
+                            this.setState({
+                                selected: [key]
+                            })
+                        }}
+                    >
+                        {
+                            menu.map(item => <Menu.Item key={item.name}
+                                onClick={this.tab.bind(this, item.goodsTag)}
+                                style={{ width: '33.3%', height: 50, textAlign: "center" }}>
+                                {item.text}
+                            </Menu.Item>)
+                        }
+
+                    </Menu >
+                    <div>
+                        {
+                            home_goods.map(item => {
+                                return <div className="home_item" key={item.gid} onClick={this.goto_goods.bind(this, item.gid)}>
+                                    <h4>
+                                        <span>{item.tag}</span> |
                                 <span>广州出发</span>
-                            </h4>
-                            <p>
-                                ￥ &nbsp;
+                                    </h4>
+                                    <p>
+                                        ￥ &nbsp;
                                         <span style={{ fontSize: 20, fontWeight: 'bold' }}>{item.price}</span>
-                                &nbsp;起
+                                        &nbsp;起
                                     </p>
-                            <img src={item.imgurl} />
-                            <h3>{item.title}</h3>
-                            <span style={{ paddingLeft: 10 }}>{item.pro_tags}</span>
-                        </div>
+                                    <img src={item.imgurl} />
+                                    <h3>{item.title}</h3>
+                                    <span style={{ paddingLeft: 10 }}>{item.pro_tags}</span>
+                                </div>
 
-                    })
-                }
-            </div>
-        </div>
+                            })
+                        }
+                    </div>
+                </div>
                 <BackTop visibilityHeight="400" />
             </div >
         )

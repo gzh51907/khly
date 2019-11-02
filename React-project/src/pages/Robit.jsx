@@ -1,107 +1,130 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Api from '@/Api';
+import { Avatar, Icon } from 'antd';
 import 'whatwg-fetch';
+import '@/sass/Robit.scss';
 
 
 class Robit extends Component {
     //构造函数中初始化状态值，meg：输入的值，respon:机器人返回值，megArray:用户发送的值
-    constructor() {
-        super()
-        this.state = {
-            meg: '',
-            respon: [],
-            megArray: []
-        }
+    state = {
+        meg: '',
+        respon: [],
+        megArray: [],
+        total_list: ['您好，有什么可以帮您的吗']
     }
+
     //input的onChange绑定事件
     handleData(e) {
         this.setState({
             meg: e.target.value
         })
     }
+    componentDidMount(){
+        this.areaDOM.focus();
+    }
+
+    componentDidUpdate(){
+        this.ulDOM.lastElementChild.scrollIntoView();
+    }
     //自定义函数，处理发送数据及返回的网络数据的保存操作
-    sendMessage() {
+    async sendMessage() {
         var message = this.state.meg
+        let { total_list } = this.state;
         if (message === '') {
             alert('不能发送空白消息哦')
         } else {
+            this.areaDOM.value = "";
+            this.areaDOM.focus();
             this.setState({
-                megArray: [...this.state.megArray, message]
+                megArray: [...this.state.megArray, message],
+                total_list: [...total_list, message]
             })
             let { megArray } = this.state;
             //锁定当前环境
             var that = this
 
-            var func = Api.post('http://openapi.tuling123.com/openapi/api/v2', {
-                // method: 'POST',
-                type: 'cors',
-                // mode: 'no-cors',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin':'*'
-                },
-                raw:{
-                    "reqType": 0,
-                    "perception": {
-                        "inputText": {
-                            "text": "你好"
-                        },
-                        "inputImage": {
-                            "url": "imageUrl"
-                        },
-                        "selfInfo": {
-                            "location": {
-                                "city": "北京",
-                                "province": "北京",
-                                "street": "信息路"
-                            }
-                        }
+            var { data: { results } } = await Api.axios.post('/tuling/openapi/api/v2', {
+                "reqType": 0,
+                "perception": {
+                    "inputText": {
+                        "text": megArray
                     },
-                    "userInfo": {
-                        "apiKey": "20480027bb364c7d8e72aaac99a78f47",
-                        "userId": "419678"
+                    "inputImage": {
+                        "url": "imageUrl"
+                    },
+                    "selfInfo": {
+                        "location": {
+                            "city": "北京",
+                            "province": "北京",
+                            "street": "信息路"
+                        }
                     }
+                },
+                "userInfo": {
+                    "apiKey": "20480027bb364c7d8e72aaac99a78f47",
+                    "userId": "419678"
                 }
-            }).then(function (response) {
-                return response.text()
-            }).then(function (detail) {
-                return (that.setState({
-                    megArray: [...that.state.megArray, detail.text]
-                }, () => {
-                    //ReactDOM.findDOMNode()找到真正的节点
-                    var el = ReactDOM.findDOMNode(that.refs.msgList);
-                    console.log('el', el)
-                    el.scrollTop = el.scrollHeight;
-                }))
+
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
             })
-            console.log('func', func)
+            that.setState({
+                respon: [...that.state.respon, results[0].values.text],
+                total_list: [...this.state.total_list, results[0].values.text]
+            })
             this.state.meg = ''
         }
     }
 
+    key_down(e){
+        if(e.keyCode=== 13){
+            this.sendMessage()
+        }
+    }
+
     render() {
+        // meg：输入的值，respon:机器人返回值，megArray:用户发送的值
         var meg = this.state.meg
-        var megArray = this.state.megArray
-        var respon = this.state.respon
-        console.log('输入的值', meg)
-        console.log('机器人返回值', megArray)
-        console.log('用户发送的值', respon)
+        // var megArray = this.state.megArray
+        // var respon = this.state.respon
+        let { total_list } = this.state;
+        console.log('total_list', total_list)
         return (
-            <div className="content" style={{ height: 600, backgroundColor: 'pink' }}>
-                {/* //ref的使用 */}
-                <div className="msg-list" ref="msgList">
-                    {megArray.map((elem, index) => (
-                        <div className="container" key={index}>
-                            <div className="message">{elem}</div>
-                            <div className="response">{respon[index]}</div>
-                        </div>)
-                    )}
-                </div>
-                <div className="fixedBottom">
-                    <input className="input" value={meg} onChange={this.handleData.bind(this)} />
-                    <button className="button" onClick={this.sendMessage.bind(this)}>发送</button>
+            <div className="msg-list">
+                <div className="tishi">客服小薇已成功接入……</div>
+                <ul ref={el=>{this.ulDOM=el}}>
+                    {
+                        total_list.map((item,index) => {
+                            if (index % 2 !== 0) {
+                                return (
+                                    <li key={index} className="user_txt" style={{ backgroundColor: '#58bc58' }}>
+                                        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                                        <p>用户:</p>
+                                        <div className="toke">{item}</div>
+                                        <time>{new Date(Date.now()).toLocaleString()}</time>
+                                    </li>
+                                )
+                            } else {
+                                return (<li  key={index} className="robit_txt" style={{ backgroundColor: '#f7f7f7', left: 50 }}>
+                                    <img src="../images/shouye/tubiao/apple-touch-icon.png" />
+                                    <p>小薇:</p>
+                                    <div className="toke">{item}</div>
+                                    <time>{new Date(Date.now()).toLocaleString()}</time>
+                                </li>
+                                )
+                            }
+                        })
+                    }
+                </ul>
+                <div className="txt">
+                    <textarea onChange={this.handleData.bind(this)} 
+                    ref={el=>{this.areaDOM =el}}
+                    onKeyUp = {this.key_down.bind(this)}
+                    />
+                    <button className="btn-send" onClick={this.sendMessage.bind(this)}>发送</button>
                 </div>
             </div>
         )

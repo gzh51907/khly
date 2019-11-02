@@ -10,22 +10,13 @@ module.exports = {
     },
     devServer: {
         contentBase: path.join(__dirname, './src'),
-        proxy: {
-            '/tuling': {
-                target: 'http://openapi.tuling123.com',
-                changeOrigin: true,
-                pathRewrite: {
-                    '/tuling': '/'
-                }
-            }
-        }
     },
-    resolve: {
-        alias: {
-            '@': path.resolve('src'),
-            '@@': path.resolve('src/pages'),
+    resolve:{
+        alias:{
+            '@':path.resolve('src'),
+            '@@':path.resolve('src/pages'),
         },
-        extensions: ['.js', '.jsx']
+        extensions:['.js','.jsx']
     },
     //加载器
     module: {
@@ -53,28 +44,28 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
-                    name: '../dist/img/[name].[hash:7].[ext]'
+                  limit: 10000,
+                  name: '../dist/img/[name].[hash:7].[ext]'
                 }
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                test:/\.css$/,
+                use:['style-loader','css-loader'],
             },
             {
-                test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                test:/\.scss$/,
+                use:['style-loader','css-loader','sass-loader']
             }
         ]
     },
-    plugins: [
-        // 删除dist文件夹
-        new CleanWebpackPlugin(),
+    plugins:[
+         // 删除dist文件夹
+         new CleanWebpackPlugin(),
 
-        // 创建dist文件
-        new HtmlWebpackPlugin({
-            template: './src/template.html',
-            // filename:'index.html'
-        })
+         // 创建dist文件
+         new HtmlWebpackPlugin({
+             template:'./src/template.html',
+             // filename:'index.html'
+         })
     ]
 }
