@@ -72,7 +72,7 @@ class Home extends Component {
             history.push('/search/' + val)
     }
 
-    // 出现联系方式和关闭
+    // 出现联系方式和关闭1
     showDrawer = () => {
         this.setState({
             visible: true,
