@@ -116,7 +116,6 @@ class Goods extends Component {
     }
 
     async seve() {
-        console.log('save')
         let data = await Api.patch(`goods/change?gid=${gid.value}`, {
             gid: gid.value,
             title: title.value,
@@ -148,7 +147,7 @@ class Goods extends Component {
             <>
                 <Table type='radio' columns={columns} dataSource={goodslist} />
                 <Drawer
-                    title="Basic Drawer"
+                    title="修改商品信息"
                     placement="right"
                     closable="true"
                     onClose={this.onClose}
