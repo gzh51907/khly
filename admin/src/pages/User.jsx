@@ -11,9 +11,10 @@ class User extends Component {
         let { code } = await Api.post('/user/dele', {
             username
         })
+        console.log(code)
         if (code === 1) {
             message.success('删除成功');
-            let userlist = await Api.get("/user", {});
+            let userlist = await Api.post("/user", {});
             this.setState({
                 listData: userlist
             })
@@ -24,7 +25,7 @@ class User extends Component {
     }
     async componentDidMount() {
         console.log('进入页面');
-        let userlist = await Api.get("/user", {});
+        let userlist = await Api.post("/user", {});
         this.setState({
             listData: userlist
         })

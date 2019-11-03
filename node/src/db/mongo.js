@@ -60,7 +60,7 @@ async function search(colName, query = {}) {
 
 // id查询
 async function getid(colName, query = {}) {
-	console.log("id查询",typeof(query))
+
     let { db, client } = await connect();
     let col = db.collection(colName);
 	query = parseInt(query)
@@ -77,15 +77,43 @@ async function remove(colName, query= {}) {
     } = await connect();
     // 获取集合
     let col = db.collection(colName);
+    let result = await col.deleteMany({"gid":query});
+    client.close();
+
+    return result;
+}
+// 删除
+async function removeuser(colName, query= {}) {
+    let {
+        db,
+        client
+    } = await connect();
+    // 获取集合
+    let col = db.collection(colName);
     let result = await col.deleteMany(query);
     client.close();
 
     return result;
 }
+// 更新
+async function update(colName, query, data) {
+        let {
+            db,
+            client
+        } = await connect();
+        // 获取集合
+        let col = db.collection(colName);
+        let result = await col.updateMany(query, {$set:data});
+        client.close();
+        return result;
+    }
+
 module.exports = {
     create,
     find,
     search,
-	remove,
-	getid
+    remove,
+    getid,
+    update,
+    removeuser
 }

@@ -17,7 +17,14 @@ export async function post(url,params,config={}){
     return data
 }
 
+export async function patch(url,params,config={}){
+    let {data} = await KHLY.patch(url,params,config);
+    return data
+}
+
+
 export default {
     get,
-    post
+    post,
+    patch
 }
