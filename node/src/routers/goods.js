@@ -36,13 +36,7 @@ Router.post('/sort', async (req, res) => {
 // 模糊查询
 Router.get('/search', async (req, res) => {
 
-<<<<<<< HEAD
-    let {
-        title
-    } = req.query;
-=======
     let { title } = req.query;
->>>>>>> a145269dd75ed173beb1f39a03577a427d2daede
     let result
     try {
         result = await mongo.search(colName, title);
@@ -178,12 +172,8 @@ Router.delete("/dele", async (req, res) => {
 Router.patch('/change', async (req, res) => {
     let id = req.query.barcode * 1;
     req.query.barcode = id;
-<<<<<<< HEAD
-    let result = await mongodb.update(colName, req.query, req.body);
-=======
     let result = await mongodb.update(colName, req.query, req.body
     );
->>>>>>> a145269dd75ed173beb1f39a03577a427d2daede
     res.send(result);
 });
 
