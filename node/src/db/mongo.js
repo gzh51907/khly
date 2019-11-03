@@ -82,6 +82,19 @@ async function remove(colName, query= {}) {
 
     return result;
 }
+// 删除
+async function removeuser(colName, query= {}) {
+    let {
+        db,
+        client
+    } = await connect();
+    // 获取集合
+    let col = db.collection(colName);
+    let result = await col.deleteMany(query);
+    client.close();
+
+    return result;
+}
 // 更新
 async function update(colName, query, data) {
         let {
@@ -101,5 +114,6 @@ module.exports = {
     search,
     remove,
     getid,
-    update
+    update,
+    removeuser
 }

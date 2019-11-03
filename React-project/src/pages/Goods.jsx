@@ -187,7 +187,7 @@ class Goods extends Component {
                         </div>
 
                         <div className="Main_xingcheng">
-                            <img src="../images/xiangqing11.png" alt="" />
+                            <img src={require("../images/xiangqing11.png")} alt="" />
                         </div>
                     </div>
                     <div className="Goods_Footer">

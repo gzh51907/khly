@@ -66,10 +66,10 @@ Router.post("/dele", async (req, res) => {
     let {
         username
     } = req.body;
-   // console.log("后台接收",username)
+   console.log("后台接收",username)
     let result;
     try {
-        result = await mongo.remove(colName, {
+        result = await mongo.removeuser(colName, {
             username: username
         })
         result = formatData()
