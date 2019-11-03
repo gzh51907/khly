@@ -44,7 +44,7 @@ class Mine extends Component {
                         className={(this.state.hover ? 'myHover' : '')}
                         onMouseEnter={this.mouse_hover.bind(this)}
                         onMouseLeave={this.mouse_leave.bind(this)}
-                        src={require("../images/touxiang.png")} />
+                        src={require("../images/header_logo.png")} />
                         <span style={{ fontSize: 16, margin: 10, marginLeft: 20 }}>{user}</span>
                         <span style={{ color: 'red', cursor: 'pointer' }} onClick={this.out.bind(this)}>退出</span>
                     </> : <p>请先登录</p>
