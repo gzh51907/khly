@@ -100,8 +100,11 @@ class List extends Component {
         });
         this.setState({
             visible2: false,
+            
         });
+       
     };
+    
 
     // onChange = e => {
     //     this.setState({
