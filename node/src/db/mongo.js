@@ -63,27 +63,28 @@ async function getid(colName, query = {}) {
 
     let { db, client } = await connect();
     let col = db.collection(colName);
-	query = parseInt(query)
-    let result = await col.find({"gid":query}).toArray();
+    query = parseInt(query)
+    let result = await col.find({ "gid": query }).toArray();
     client.close();
     return result;
 }
 
 // 删除
-async function remove(colName, query= {}) {
+async function remove(colName, query = {}) {
     let {
         db,
         client
     } = await connect();
     // 获取集合
     let col = db.collection(colName);
-    let result = await col.deleteMany({"gid":query});
+    let result = await col.deleteMany({ 'gid': query });
     client.close();
 
     return result;
 }
+
 // 删除
-async function removeuser(colName, query= {}) {
+async function removeuser(colName, query = {}) {
     let {
         db,
         client
@@ -96,17 +97,20 @@ async function removeuser(colName, query= {}) {
     return result;
 }
 // 更新
-async function update(colName, query, data) {
-        let {
-            db,
-            client
-        } = await connect();
-        // 获取集合
-        let col = db.collection(colName);
-        let result = await col.updateMany(query, {$set:data});
-        client.close();
-        return result;
-    }
+async function update(colName, query, data) {
+    let {
+        db,
+        client
+    } = await connect();
+    // 获取集合
+    let col = db.collection(colName);
+    console.log('query', typeof (query.gid))
+    query.gid = parseInt(query.gid)
+    console.log('query', typeof (query.gid))
+    let result = await col.updateMany(query, { $set: data });
+    client.close();
+    return result;
+}
 
 module.exports = {
     create,

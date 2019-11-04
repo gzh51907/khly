@@ -17,13 +17,11 @@ class Mine extends Component {
     }
 
     mouse_hover() {
-        console.log('鼠标移入')
         this.setState({
             hover: true
         })
     }
     mouse_leave() {
-        console.log('鼠标移出')
         this.setState({
             hover: false
         })
