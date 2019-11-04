@@ -14,7 +14,7 @@ class Robit extends Component {
         total_list: ['您好，有什么可以帮您的吗']
     }
 
-    goto_home(){
+    goto_home() {
         let { history } = this.props;
         history.push('/home');
     }
@@ -25,11 +25,11 @@ class Robit extends Component {
             meg: e.target.value
         })
     }
-    componentDidMount(){
+    componentDidMount() {
         this.areaDOM.focus();
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.ulDOM.lastElementChild.scrollIntoView();
     }
     //自定义函数，处理发送数据及返回的网络数据的保存操作
@@ -84,8 +84,8 @@ class Robit extends Component {
         }
     }
 
-    key_down(e){
-        if(e.keyCode=== 13){
+    key_down(e) {
+        if (e.keyCode === 13) {
             this.sendMessage()
         }
     }
@@ -97,22 +97,22 @@ class Robit extends Component {
         return (
             <div className="msg-list">
                 <div className="tishi">
-                <Icon type="home"  onClick={this.goto_home.bind(this)} style={{marginRight:20}}/>
+                    <Icon type="home" onClick={this.goto_home.bind(this)} style={{ marginRight: 20 }} />
                     客服小薇已成功接入……</div>
-                <ul ref={el=>{this.ulDOM=el}}>
+                <ul ref={el => { this.ulDOM = el }}>
                     {
-                        total_list.map((item,index) => {
+                        total_list.map((item, index) => {
                             if (index % 2 !== 0) {
                                 return (
                                     <li key={index} className="user_txt" style={{ backgroundColor: '#58bc58' }}>
-                                        <img className="user_img" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />               
+                                        <img className="user_img" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                                         <div className="toke">{item}</div>
                                         <time>{new Date(Date.now()).toLocaleString()}</time>
                                     </li>
                                 )
                             } else {
-                                return (<li  key={index} className="robit_txt" style={{ backgroundColor: '#f7f7f7', left: 50 }}>
-                                    <img src="../images/shouye/tubiao/apple-touch-icon.png" />                     
+                                return (<li key={index} className="robit_txt" style={{ backgroundColor: '#f7f7f7', left: 50 }}>
+                                    <img src={require("../images/shouye/tubiao/apple-touch-icon.png")} />
                                     <div className="toke">{item}</div>
                                     <time>{new Date(Date.now()).toLocaleString()}</time>
                                 </li>
@@ -122,9 +122,9 @@ class Robit extends Component {
                     }
                 </ul>
                 <div className="txt">
-                    <textarea onChange={this.handleData.bind(this)} 
-                    ref={el=>{this.areaDOM =el}}
-                    onKeyUp = {this.key_down.bind(this)}
+                    <textarea onChange={this.handleData.bind(this)}
+                        ref={el => { this.areaDOM = el }}
+                        onKeyUp={this.key_down.bind(this)}
                     />
                     <button className="btn-send" onClick={this.sendMessage.bind(this)}>发送</button>
                 </div>
