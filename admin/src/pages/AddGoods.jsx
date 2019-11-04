@@ -3,8 +3,6 @@ import { Form, Select, Input, Button, Upload, Icon ,message} from 'antd';
 import Api from '@/Api';
 import '../sass/AddGoods.scss'
 
-// const { from } = this.props;
-
 const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 8 },
@@ -20,7 +18,6 @@ class AddGoods extends Component {
 
     check = async () => {
        
-        // console.log(dragger.value)
         this.props.form.validateFields(async err => {
             if (!err) {
                 message.loading({ content: '增加商品成功...', key });
@@ -46,8 +43,8 @@ class AddGoods extends Component {
 
     };
     normFile = e => {
-
-        console.log('Upload event:', 'http://' + e.file.name);
+        let name = e.file.name;
+        console.log(name)
         if (Array.isArray(e)) {
             return e;
         }
