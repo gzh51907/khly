@@ -153,13 +153,11 @@ Router.post('/add', async (req, res) => {
 // // 删除单个商品
 Router.get('/remove', async (req, res) => {
     let { gid } = req.query;
-	console.log('gid',gid)
+	console.log('gid',typeof(req.query.gid))
     let result;
     try {
-        result = await mongo.remove(colName, gid , null);
-      
+        result = await mongo.remove(colName, gid *1,null);
             result = formatData()
-        
     } catch {
         result = formatData({
             code: "0"

@@ -63,29 +63,16 @@ class Goods extends Component {
         edit_goodslist: []
     }
 
-    // async get_goodslist() {
-    //     let data = await Api.get('goods', {
-    //     }, null)
-    //     // console.log(data)
-    //     this.setState({
-    //         goodslist: data
-    //     })
-    // }
-
     async delete_goods(e) {
         let gid = e.target.parentNode.parentNode.parentNode.children[0].innerHTML;
+        console.log('11',typeof(gid*1))
         let { code } = await Api.get('/goods/remove', {
-            gid
+            gid:gid
         })
-            // let datas = await Api.get('goods', {
-            // }, null)
-            // this.setState({
-            //     goodslist: datas
-            // })
-
+        console.log('code',code)
             let remove_data = await Api.get('goods', {
             }, null)
-            console.log('111',remove_data)
+
             this.setState({
                 goodslist: remove_data
             })
@@ -94,8 +81,6 @@ class Goods extends Component {
             setTimeout(() => {
                 message.success({ content: '删除商品成功！', key, duration: 2 });
             })
-
-        
     }
 
     showDrawer = () => {
@@ -120,6 +105,7 @@ class Goods extends Component {
         let imgurl = e.target.parentNode.parentNode.parentNode.children[5].innerHTML;
         let pro_tags1 = e.target.parentNode.parentNode.parentNode.children[6].innerHTML;
 
+
         this.setState({
             visible: true,
             edit_goodslist: [{
@@ -135,8 +121,9 @@ class Goods extends Component {
     }
 
     async seve() {
+  
         let data = await Api.patch(`goods/change?gid=${gid.value}`, {
-            gid: gid.value,
+            gid: gid.value * 1,
             title: title.value,
             tag: tag.value,
             pro_tags: pro_tags.value,
