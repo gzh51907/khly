@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Table, Divider, Tag, Button, Drawer, Form, Col, Row, Input, Select, DatePicker, Icon, message } from 'antd';
 import Api from '@/Api';
 import '../sass/goods.scss';
-// const { Column, ColumnGroup } = Table;
 const ButtonGroup = Button.Group;
 
 const formItemLayout = {
@@ -10,6 +9,9 @@ const formItemLayout = {
     wrapperCol: { span: 16 },
 };
 const key = 'updatable';
+
+
+
 class Goods extends Component {
     state = {
         goodslist: [],
@@ -63,20 +65,22 @@ class Goods extends Component {
 
     async delete_goods(e) {
         let gid = e.target.parentNode.parentNode.parentNode.children[0].innerHTML;
+        console.log('11',typeof(gid*1))
         let { code } = await Api.get('/goods/remove', {
-            gid
+            gid:gid
         })
-        if (code === 1) {
-            let datas = await Api.get('goods', {
+        console.log('code',code)
+            let remove_data = await Api.get('goods', {
             }, null)
+
             this.setState({
-                goodslist: datas
+                goodslist: remove_data
             })
+
             message.loading({ content: '删除商品成功...', key });
             setTimeout(() => {
                 message.success({ content: '删除商品成功！', key, duration: 2 });
             })
-        }
     }
 
     showDrawer = () => {
@@ -101,6 +105,7 @@ class Goods extends Component {
         let imgurl = e.target.parentNode.parentNode.parentNode.children[5].innerHTML;
         let pro_tags1 = e.target.parentNode.parentNode.parentNode.children[6].innerHTML;
 
+
         this.setState({
             visible: true,
             edit_goodslist: [{
@@ -116,27 +121,35 @@ class Goods extends Component {
     }
 
     async seve() {
-        console.log('save')
+  
         let data = await Api.patch(`goods/change?gid=${gid.value}`, {
-            gid: gid.value,
+            gid: gid.value * 1,
             title: title.value,
             tag: tag.value,
             pro_tags: pro_tags.value,
             price: price.value,
             pro_tags1: pro_tags1.value
         })
+
+        let edit_data = await Api.get('goods', {
+        }, null)
+        this.setState({
+            goodslist: edit_data
+        })
+
         message.loading({ content: '修改商品成功...', key });
         setTimeout(() => {
             message.success({ content: '修改商品成功！', key, duration: 2 });
         })
+
     }
 
     async componentDidMount() {
-        let data = await Api.get('goods', {
+        let init_data = await Api.get('goods', {
         }, null)
         // console.log(data)
         this.setState({
-            goodslist: data
+            goodslist: init_data
         })
     }
 
@@ -148,7 +161,7 @@ class Goods extends Component {
             <>
                 <Table type='radio' columns={columns} dataSource={goodslist} />
                 <Drawer
-                    title="Basic Drawer"
+                    title="修改商品信息"
                     placement="right"
                     closable="true"
                     onClose={this.onClose}
@@ -205,7 +218,7 @@ class Goods extends Component {
                         <Form.Item wrapperCol={{ span: 12, offset: 5 }} >
                             <Button type="primary"
                                 htmlType="submit"
-                                onClick={this.seve}>
+                                onClick={this.seve.bind(this)}>
                                 保存
                                     </Button>
                         </Form.Item>
