@@ -83,7 +83,7 @@ async function remove(colName, query = {}) {
     return result;
 }
 
-// 删除
+// 删除goods
 async function removeuser(colName, query = {}) {
     let {
         db,
